@@ -226,7 +226,7 @@ else:
     plab = PLabels[1]
 
 #-- Fig. Barrois and Aubert 2024
-#plt.rcParams['text.usetex'] = True
+plt.rcParams['text.usetex'] = True
 #-- Aggregated equatContour plot phi-vs-s at different times
 k=-1
 #fig = plt.figure(figsize=(26, 3.6))#figsize=(25.2, 5.1))
@@ -299,11 +299,8 @@ for n_t in t_pick:
         transAx = mtransforms.ScaledTranslation(+10/72, -5/72, fig.dpi_scale_trans)
         ax.text(0.0, 1.0, plab, transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
-#fig.add_axes([1.85, 1.15, 1.05, 1.7])
 #
 plt.tight_layout()
-#cb = fig.colorbar(cf, ax=axs[:], fraction=0.02, pad=0.015, orientation='horizontal', ticks=clevels, format=r'${x:.0f}$')
-#cb.ax.tick_params(labelsize=32)
 if ( not l_save ):  plt.show()
 
 #-- Save True Fields analysis

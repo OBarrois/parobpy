@@ -36,7 +36,7 @@ directory = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/'+run_Pm+'/' # 
 
 #-- phi-Avg of field - phi-Avg gives only noise. Otherwise the rest is fine.
 t_srate = 1 # sampling rate of Gt files if needed. Should be <= ntime
-phi_sample = 3 # longitude to extract for time sampling
+phi_sample = 3 # longitude to extract for phi sampling
 
 rank = 0 # default proc number when l_mpi == False
 l_mpi = True # use MPI to speed up horizontal gradients for the curl computation or not
@@ -44,7 +44,6 @@ l_mpi = True # use MPI to speed up horizontal gradients for the curl computation
 l_field = 'Lorz' #field to be curled, transformed and plotted: can be either 'omz', 'Corz' or 'Lorz'
 l_redim = True # re-dimensionalisation of the quantities
 l_tau_A = True # re-dimensionalisation on the Alfven or on the Viscous time-scales
-l_rebuild = False # rebuild field from sinusogramm (Radon transform output)
 l_build_wave_disp = True # compute the theoretical wave-dispersion relations from (Gillet et al. 2022)
 
 l_spectral = True # using spectral derivatives in theta and phi for curl? (advised:  = True)
@@ -58,7 +57,7 @@ l_snorm = False # Normalise fields by the maximum at each s-radius or not
 l_deminc = False # Plot fields including azimuthal symmetries or not (if minc !=1)
 
 l_txtd = False # Extending time up to 2pi for FFT?
-l_all_phi = True # Transform and Sum for all phi or not? #NOTE: Could be extremely long if set to True
+l_all_phi = True # Transform and Sum for all phi or not? #NOTE: Could be extremely slow if set to True
 l_sqdht = False # Using Hankel transform (if True) for radius axis OR DCT (if False)
 
 #-- I/O; NOTE: does not seem to replace files if they exist even if l_save*!

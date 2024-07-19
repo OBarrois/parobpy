@@ -311,4 +311,67 @@ if ( l_save ):
         plt.savefig(savePlot+'Azimuth-Radius-Diagram-EquatContour_Minc_uphi-Zonal.png')
     plt.close('all')
 
+
+#-- Fig. Answer to Referee: Barrois and Aubert 2024
+#-- Aggregated plot Time-vs-Azimuth at different radii. NOTE: Need to read and store all equatorial frames.
+eps = 1.e-3
+
+l_plot_fluct = 1
+#-- Field to plot
+if ( l_plot_fluct == 1 ):
+    fieldplot = upft.copy()#upt.copy()#brt.copy()#
+    cmax = 8.0e0#1.0e-4#2.#4.#upft# 12.#upt# 
+    cmapplot = plt.cm.seismic#plt.cm.PuOr_r#cmo.balance#
+    plab = PLabels[2]
+    ncl = 5
+elif ( l_plot_fluct == 2 ):
+    fieldplot = brt.copy()#
+    cmax = 1.0e-4#8.0e-5#
+    cmapplot = plt.cm.PuOr_r#
+    plab = PLabels[3]
+    ncl = 3
+else:
+    fieldplot = upt.copy()#
+    cmax = 12.#6.#12.#upt#
+    cmapplot = plt.cm.seismic#
+    plab = PLabels[1]
+    ncl = 5
+
+nplots = 4
+t_pick = np.array([3, 100, 200, 300, 397])#np.array([3, 243, 486, 729, 972])#
+xlevels=(0.5, 1.0, 1.5, 2.0)#(0.0, 0.7, 1.4, 2.1)#
+ylevels=(0.4, 0.8, 1.2, 1.6)
+#
+k=-1
+fig = plt.figure(figsize=(21, 7.4))
+for n_r in t_pick:
+    #cmax = 6. #abs(fieldxtd[:,:nphi,n_s]).max()*0.92#
+    llevels=np.linspace(-cmax,cmax,64)
+    clevels=np.linspace(-cmax,cmax,ncl)#5)#3)#
+    k+=1
+    ax = plt.subplot2grid((1,nplots+1), (0,k))
+    cf = ax.contourf(phi,tdimt,fieldplot[:,:nphi,n_r],levels=llevels,extend='both',cmap=cmapplot)#
+    plt.xlabel(r'Azimuth, $\phi$', fontsize=36)
+    if (k==0):  plt.ylabel(r'Time, $t$', fontsize=36)
+    plt.xticks(xlevels)
+    plt.yticks(ylevels)
+    plt.gca().xaxis.set_tick_params(labelsize=32)
+    plt.gca().yaxis.set_tick_params(labelsize=32)
+    #plt.title(r'time $t = $'+str(np.round(tana[n_t],2)))
+    plt.title(r'$r = {:.2f}$'.format(radius[n_r]), fontsize=32)
+    if ( l_plot_fluct == 2 ):
+        cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.16, orientation='horizontal', ticks=clevels, format=r'${x:.0e}$')
+        cb.ax.tick_params(labelsize=24)#
+    else:
+        cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.16, orientation='horizontal', ticks=clevels, format=r'${x:.0f}$')
+        cb.ax.tick_params(labelsize=32)#24)#
+plt.tight_layout()
+plt.show()
+#
+#-- Save True Fields analysis
+if ( l_save and rank==0 ):
+    plt.figure(1)
+    plt.savefig(savePlot+'ATime-Azimuthal-Diagram_field-Col.png')
+    plt.close('all')
+            
 #-- End Script

@@ -6,7 +6,7 @@ Created on Thu Jan 11 2024
 
 Loads graphics files and compute kinetic and magnetic Energies from frames with a sampling rate t_sampling.
 
-Then one can save the quantites of interest or plot directly Ekin and Emag.
+Then one can save the quantities of interest or plot directly Ekin and Emag.
 """
 
 #import os
@@ -51,19 +51,18 @@ def Smooth_8N(field_2D):
 #-- Lehnert number, \lambda = B/{sqrt(rho mu) * Omega*d}.
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e7', 'Pm0o25', 1.46e-3, 1.0, 'b3', '0.000280800' # 3e-7 S=1214.1
 run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'b4', '0.000040320' # 1e-7
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1Long', 1.1e-3, 1.0, 'b4-long', '0.000614400' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'bbi1e7', '0.000071360' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_per', 1.1e-3, 1.0, 'bbi1e7p', '0.000147200' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathBase', 1.1e-3, 1.0, 'b4-p', '0.000008755' # 1e-7
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathLund3o2e3', 5.53e-4, 1.0, 'b4o6', '0.000015600' # 6.3e-9 (1e7 grid)
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Bench_Pulse-Time', 1.1e-3, 1.0, 'b4-bis', '0.000080000' # 1e-7 #, 'Pm1o44e-1_Bench'
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1', 6.2e-4, 1.0, 'b4o5', '0.000021840' # 1e-8
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1BIS', 6.2e-4, 1.0, 'b4o5', '0.000024896' # 1e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', '', 5.4e-4, 1.0, 'b4o5', '0.000024896' # 1e-8
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '6e9', 'Pm0o36e-1', 5.53e-4, 1.0, 'b4o63', '0.000015560' # 6.3e-9
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '6e9', 'Pm0o36e-1BIS', 5.53e-4, 1.0, 'b4o63B', '0.000019760' # 6.3e-9
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e10', '', 2.6e-4, 1.0, 'b5', '0.000001456' # 3e-10
 
 #saveDir = '/gpfs/users/obarrois/Parodys/Outputs/Data/' # if you use python directly from cluster
 #directory = '/gpfs/users/obarrois/Work/Waves1e7/' # if you use python directly from cluster
 #directory = '/Users/obarrois/Desktop/dfgnas3/Waves/Data_3e10/' # run at 3e-10 on jaubert disk
-directory = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/'+run_Pm+'/' # if you mount stella on own desk
+directory = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/Waves'+run_Ek+'/'+run_Pm+'/' # if you mount stella on own desk
 
 l_noIC = True # Excluding z-avg fields inside of the TC?
 l_resym = False # re-symmetrizing the data if minc !=1
@@ -79,7 +78,7 @@ l_plot_mean = False # produce and save phi-sampled or phi-Averaged Energies
 l_check_all = False # display all check plot figures
 l_save = 1 # save figures?
 l_zavg = 1 # using python method to compute z-avg of the forces
-savePlot = '/Users/obarrois/Desktop/Parodys/Outputs/Waves'+run_Ek+'/Signal/Spectra/' # path to save files
+savePlot = '/Users/obarrois/Desktop/Parodys/Outputs/IC_Impulse/Waves'+run_Ek+'/Signal/Spectra/' # path to save files
 
 #------------------------------------------------------------------------------
 #%% Load data
@@ -93,10 +92,10 @@ filename = directory + Gt_file
             _, _, _, _) = parodyload(filename)
 
 if ( run_Pm == 'PathBase' ):
-    basedir = '/Users/obarrois/Desktop/stella/Work/' # basefield copied on stella
+    basedir = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/' # basefield copied on stella
     basename = basedir+'basefield_path.mat' # if you use python directly from cluster
 else:
-    basedir = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/' # basefield copied on stella
+    basedir = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/Waves'+run_Ek+'/' # basefield copied on stella
     basename = basedir+'basefield.mat' # if you use python directly from cluster
 B0r, B0t, B0p, _, _, _ = load_basefield(basename,nr,ntheta,nphi)
 
@@ -120,6 +119,55 @@ B0r*=amp_B; B0t*=amp_B; B0p*=amp_B
 tredim = 1./(Ek/Lehnert)
 Bdim = 1./(Pm*Ek)#(Pm*Ek)/(Pm*Lehnert)# NOTE: Viscous scaling because all quantities are directly from Parody (would have to rescale U and B differently if one wants to use Alfvén units)
 
+if ( l_check_all ):
+    #-- Read spectra if needed
+    directory = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/Waves'+run_Ek+'/'+run_Pm+'/' # if you mount stella on own desk
+    read_spec = np.loadtxt(directory+'spec_l.'+run_ID,dtype=str)
+    l_spec = np.array(read_spec[:,0],dtype=np.int16)
+    l_max = l_spec[-1]; l_h = 30
+    Spec = np.zeros((4,l_max+1),dtype=np.float64)
+    for n_spec in range(l_max+1):
+        #print(read_spec[:,1][n_spec])
+        #print(read_spec[:,1][n_spec][:10], 'E', read_spec[:,1][n_spec][11:])
+        Spec[0,n_spec] = np.float64(read_spec[:,1][n_spec][:10]+'E'+read_spec[:,1][n_spec][11:])
+        Spec[1,n_spec] = np.float64(read_spec[:,2][n_spec][:10]+'E'+read_spec[:,2][n_spec][11:])
+        Spec[2,n_spec] = np.float64(read_spec[:,3][n_spec][:10]+'E'+read_spec[:,3][n_spec][11:])
+        Spec[3,n_spec] = np.float64(read_spec[:,4][n_spec][:10]+'E'+read_spec[:,4][n_spec][11:])
+    #
+    #-- Plot spectra if needed
+    cmax = np.amax(Spec[:,1:])*1.1; cmin = np.amin(Spec[:,1:])*0.9
+    fig = plt.figure(figsize=(14.5, 12.5))
+    ax = plt.subplot(111)
+    ax.loglog(l_spec[1:], Spec[1][1:], color='b', ls='-',marker='', lw='3.1', alpha=0.9, label=r'$\widehat{E}_\mathrm{kin}(\ell)$') # u_avg
+    ax.loglog(l_spec[1:], Spec[0][1:], color='c', ls='--',marker='', lw='2.6', alpha=0.7, label=r'$E_\mathrm{kin}(t_\mathrm{end}, \ell)$') # u_last
+    ax.loglog(l_spec[1:], Spec[3][1:], color='r', ls='-',marker='', lw='3.1', alpha=0.9, label=r'$\widehat{E}_\mathrm{mag}(\ell)$') # b_avg
+    ax.loglog(l_spec[1:], Spec[2][1:], color='#FF7F00', ls='--',marker='', lw='2.6', alpha=0.7, label=r'$E_\mathrm{mag}(t_\mathrm{end}, \ell)$') # b_last
+    ax.loglog([l_h, l_h], [cmin, cmax], color='k', ls=':',marker='', lw='2.7', alpha=0.8, label=r'Hyperdiffusive cut-off degree, $\ell_h$') # l_h
+    plt.xlim(l_spec[1],l_max)
+    plt.ylim(cmin,cmax)
+    plt.xlabel(r'Spherical Harmonic degree, $\ell$', fontsize=36)#
+    plt.ylabel(r'Energy spectra', fontsize=36)#
+    plt.gca().xaxis.set_tick_params(which='major', labelsize=32)
+    plt.gca().xaxis.set_tick_params(which='minor', labelsize=32)
+    plt.gca().yaxis.set_tick_params(which='major', labelsize=32)
+    plt.gca().yaxis.set_tick_params(which='minor', labelsize=32)
+    plt.grid(ls=':')
+    plt.legend(fontsize=32)
+    #
+    plt.tight_layout()
+    transAx = mtransforms.ScaledTranslation(-1.95+40/72, -35/72, fig.dpi_scale_trans)
+    ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
+            fontsize=36, va='bottom', fontfamily='serif')
+    if ( not l_save ):  plt.show()
+    #plt.show()
+    #
+    #-- Save Spectra if needed
+    if ( l_save ):
+        plt.figure(1)
+        plt.savefig(savePlot+'Spectra_Emag+Ekin.pdf')
+        plt.close('all')
+
+
 #------------------------------------------------------------------------------
 #%% Read, process and save chosen data
 
@@ -141,15 +189,20 @@ Emafm = np.zeros_like(Ekin)
 
 #-- Selecting data for plotting if needed
 if ( l_subplot ):
+    nplots = 6
+    tpk = int(len(timet[:500])/nplots)
+    #t_pick = np.arange(1,len(timet[:500]),tpk)
     nplots = 4
     t_pick = np.array([99, 199, 299, 399, 499])
 else:
     t_pick = np.arange(tstart,len(Gt_file_l),t_srate)
 
-n_s=-1
+n_s=-1#; n_t=-1
 #-- Start loop
-for file in Gt_file_l[tstart::t_srate]:
+#for file in np.array(Gt_file_l)[t_pick]:#[249:250]:#
+for file in Gt_file_l[tstart::t_srate]:#[249:250]:#
     n_s+=1
+    #n_t+=1; n_s = t_pick[n_t]
     #------------------------------------------------------------------------------
     #-- loading pointtime data
     print('Loading {} (({}/{})/{})'.format(file, n_s+1, n_samples, len(Gt_file_l)))
@@ -274,7 +327,7 @@ tdim = timet*tredim#/(Ek/Lehnert)
 #------------------------------------------------------------------------------
 #%% Compute trajectories along Aflven speeds
 
-dirva = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/'
+dirva = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/Waves'+run_Ek+'/'
 try:
     Valfven = np.loadtxt(dirva+'Va')
     l_plot_Va = True
@@ -303,7 +356,7 @@ for istep in range(1,n_Asteps):
 
 l_double_plot=True
 if ( l_double_plot ):
-    dirva = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/'
+    dirva = '/Users/obarrois/Desktop/stella/Work/IC_Impulse/Waves'+run_Ek+'/'
     try:
         Valfven = np.loadtxt(dirva+'Va_loc_fast')
         l_plot_Va = True
@@ -411,6 +464,63 @@ cb.ax.tick_params(labelsize=32)
 plt.tight_layout()
 if ( not l_save ):  plt.show()
 
+if ( False ):
+    #-- Ekin_zon
+    ffield = Ezoncol#Ekin[:,ntheta//2,:]
+    Mratio = np.log(np.sqrt(ffield))
+    fig = plt.figure(figsize=(11, 9.2))
+    cmax = abs(Mratio[:,:]).max()*0.12
+    llevels=np.linspace(0.,cmax,64)
+    clevels=np.linspace(0.,cmax,5)
+    ax = plt.subplot(111)
+    #cf = ax.contourf(radius,tdim,Mratio[:,:],levels=llevels,extend='both',cmap=cmo.thermal)
+    #cf = ax.contourf(radius,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
+    cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
+    plt.xlabel(r'radius $s$')
+    plt.ylabel(r'time $t$')
+    fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.085, orientation='horizontal')#, ticks=clevels, format='{x:.1f}')
+    #
+    plt.tight_layout()
+    plt.show()
+    #
+    Emagcol = Emagcol2.copy()
+    Emafcol = Emafcol2.copy()
+    Emazcol = Emazcol2.copy()
+    Emagmcol = Emagmcol2.copy()
+    Emafmcol = Emafmcol2.copy()
+    #
+    Bratio = 1./(Ek*Pm)# 1.33**2*(Lehnert)/(Ek)#(Ek)/(Lehnert)#
+    Emagcol*=Bratio
+    Emafcol*=Bratio
+    Emazcol*=Bratio
+    Emagmcol*=Bratio
+    Emafmcol*=Bratio
+    #
+    Emagcol2 = Emagcol.copy()
+    Emafcol2 = Emafcol.copy()
+    Emazcol2 = Emazcol.copy()
+    Emagmcol2 = Emagmcol.copy()
+    Emafmcol2 = Emafmcol.copy()
+    #
+    Ekincol2 = Ekincol.copy()
+    Eflucol2 = Eflucol.copy()
+    Ezoncol2 = Ezoncol.copy()
+    Ekinmcol2 = Ekinmcol.copy()
+    Eflumcol2 = Eflumcol.copy()
+    #
+    Ekincol = Ekincol2.copy()
+    Eflucol = Eflucol2.copy()
+    Ezoncol = Ezoncol2.copy()
+    Ekinmcol = Ekinmcol2.copy()
+    Eflumcol = Eflumcol2.copy()
+    #
+    Uratio = 1./Lehnert#1./(Ek/Lehnert)
+    Ekincol/=Uratio
+    Eflucol/=Uratio
+    Ezoncol/=Uratio
+    Ekinmcol/=Uratio
+    Eflumcol/=Uratio
+
 #-- Save True Fields analysis
 if ( l_save ):
     plt.figure(1)
@@ -426,9 +536,9 @@ if ( l_save ):
 #-- Emag/Ekin Tot
 epss=0.#1e-15
 if ( l_plot_mean ):
-    ffield = (Emagmcol+epss)/(Ekinmcol+epss)#(Emag[:,ntheta//2,:]+epss)/(Ekin[:,ntheta//2,:]+epss)#
+    ffield = (3.*Emagmcol+epss)/(Ekinmcol+epss)#(Emag[:,ntheta//2,:]+epss)/(Ekin[:,ntheta//2,:]+epss)#
 else:
-    ffield = (Emagcol+epss)/(Ekincol+epss)#+epss)#(Emagcol+epss)/(Ekincol+epss)#(Emag[:,ntheta//2,:]+epss)/(Ekin[:,ntheta//2,:]+epss)#
+    ffield = (3.*Emagcol+epss)/(Ekincol+epss)#+epss)#(Emagcol+epss)/(Ekincol+epss)#(Emag[:,ntheta//2,:]+epss)/(Ekin[:,ntheta//2,:]+epss)#
 Mratio = np.log((ffield))
 if ( np.isnan(Mratio.sum()) ): Mratio = Smooth_8N(Mratio)
 #
@@ -440,7 +550,7 @@ clevels=np.linspace(cmin,cmax,5)
 ax = plt.subplot(111)
 cf = ax.contourf(sr,tdim,Mratio[:,:],levels=llevels,extend='both',cmap='BrBG_r')#'RdGy_r')#cmo.balance)#cmo.thermal)
 ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
-plt.ylim(tdim[0],1.76)#tdim[-1])
+plt.ylim(tdim[0],tdim[-2])#1.76)#
 plt.xlabel(r'Cylindrical radius, $s$', fontsize=36)#
 plt.ylabel(r'Time, $t$', fontsize=36)#
 cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels, format=r'${x:.2f}$')
@@ -449,9 +559,9 @@ plt.gca().xaxis.set_tick_params(which='minor', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='major', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='minor', labelsize=32)
 if ( l_plot_mean ):
-    cb.set_label(label=r'log$\left(\left<\overline{E}\right.\right.$_{mag}$/\overline{E}$_{kin}$\left.\left. \right>\right)$',size=36)#, weight='bold')
+    cb.set_label(label=r'log$\left(\left< 3\,\overline{E}_\mathrm{mag}/\overline{E}_\mathrm{kin} \right>\right)$',size=36)#, weight='bold')
 else:
-    cb.set_label(label=r'log$\left(\left<E\right.\right.$_{mag}$/E$_{kin}$\left. \left. \right>\right)$',size=36)#, weight='bold')
+    cb.set_label(label=r'log$\left(\left< 3\,E_\mathrm{mag}/E_\mathrm{kin} \right>\right)$',size=36)#, weight='bold')
 cb.ax.tick_params(labelsize=32)
 #
 plt.tight_layout()
@@ -461,9 +571,9 @@ ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
 
 #-- Emag_fluct/Ekin_fluct
 if ( l_plot_mean ):
-    ffield = (Emafmcol+epss)/(Eflumcol+epss)#(Emagmcol+epss)/(Eflumcol+epss)#
+    ffield = (3.*Emafmcol+epss)/(Eflumcol+epss)#(Emagmcol+epss)/(Eflumcol+epss)#
 else:
-    ffield = (Emafcol+epss)/(Eflucol+epss)#(Emagcol+epss)/(Eflucol+epss)#
+    ffield = (3.*Emafcol+epss)/(Eflucol+epss)#(Emagcol+epss)/(Eflucol+epss)#
 Mratio = np.log((ffield))
 if ( np.isnan(Mratio.sum()) ): Mratio = Smooth_8N(Mratio)
 #
@@ -474,7 +584,7 @@ clevels=np.linspace(-cmax,cmax,5)
 ax = plt.subplot(111)
 cf = ax.contourf(sr,tdim,Mratio[:,:],levels=llevels,extend='both',cmap='BrBG_r')#'RdGy_r')#cmo.balance)#cmo.thermal)
 ax.plot(rtraj2, ttraj2, color=trajcolor2, ls='-.',marker='', lw='6.4', alpha=0.9) # Va_fast
-plt.ylim(tdim[0],1.76)#tdim[-1])
+plt.ylim(tdim[0],tdim[-2])#1.76)#
 plt.xlabel(r'Cylindrical radius, $s$', fontsize=36)#
 plt.ylabel(r'Time, $t$', fontsize=36)#
 cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels, format=r'${x:.2f}$')
@@ -483,9 +593,9 @@ plt.gca().xaxis.set_tick_params(which='minor', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='major', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='minor', labelsize=32)
 if ( l_plot_mean ):
-    cb.set_label(label=r'log$\left(\left<\overline{\tilde{E}}\right.\right.$_{mag}$/\overline{\tilde{E}}$_{kin}$\left. \left. \right>\right)$',size=36)#, weight='bold')
+    cb.set_label(label=r'log$\left(\left< 3\,\overline{\tilde{E}}_\mathrm{mag}/\overline{\tilde{E}}_\mathrm{kin} \right>\right)$',size=36)#, weight='bold')
 else:
-    cb.set_label(label=r'log$\left(\left<\tilde{E}\right.\right.$_{mag}$/\tilde{E}$_{kin}$\left. \left. \right>\right)$',size=36)#, weight='bold')
+    cb.set_label(label=r'log$\left(\left< 3\,\tilde{E}_\mathrm{mag}/\tilde{E}_\mathrm{kin} \right>\right)$',size=36)#, weight='bold')
 cb.ax.tick_params(labelsize=32)
 #
 plt.tight_layout()
@@ -505,7 +615,7 @@ clevels=np.linspace(-cmax,cmax,5)
 ax = plt.subplot(111)
 cf = ax.contourf(sr,tdim,Mratio[:,:],levels=llevels,extend='both',cmap='BrBG_r')#'RdGy_r')#cmo.balance)#cmo.thermal)
 ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
-plt.ylim(tdim[0],1.76)#tdim[-1])
+plt.ylim(tdim[0],tdim[-2])#1.76)#
 plt.xlabel(r'Cylindrical radius, $s$', fontsize=36)#
 plt.ylabel(r'Time, $t$', fontsize=36)#
 cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels, format=r'${x:.2f}$')
@@ -513,7 +623,7 @@ plt.gca().xaxis.set_tick_params(which='major', labelsize=32)
 plt.gca().xaxis.set_tick_params(which='minor', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='major', labelsize=32)
 plt.gca().yaxis.set_tick_params(which='minor', labelsize=32)
-cb.set_label(label=r'log$\left(\left< 3\,\overline{E}\right.\right.$_{mag}$/\overline{E}$_{kin}$\left.\left. \right>\right)$',size=36)#, weight='bold')
+cb.set_label(label=r'log$\left(\left< 3\,\overline{E}_\mathrm{mag}/\overline{E}_\mathrm{kin} \right>\right)$',size=36)#, weight='bold')
 cb.ax.tick_params(labelsize=32)
 #
 plt.tight_layout()
@@ -521,6 +631,28 @@ transAx = mtransforms.ScaledTranslation(13.95+10/72, -45/72, fig.dpi_scale_trans
 ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
         fontsize=36, va='bottom', fontfamily='serif')
 if ( not l_save ):  plt.show()
+#plt.show()
+
+if ( False ):
+    #-- Emag/Ekin_zon
+    #Upcol2 = field_M2.sum(axis=1)#from upcol
+    #Lcol2 = field_M2.sum(axis=1)#from fieldzcol
+    ffield = (Emagcol+epss)/(Ezoncol+epss)
+    Mratio = np.log(np.sqrt(ffield))#np.log(np.sqrt((Lcol2+epss)/(Upcol2+epss)))
+    fig = plt.figure(figsize=(11, 9.2))
+    cmax = (Mratio[:,:]).max()*0.9
+    llevels=np.linspace(-cmax,cmax,64)
+    clevels=np.linspace(-cmax,cmax,5)
+    ax = plt.subplot(111)
+    cf = ax.contourf(sr,tdim,Mratio[:,:],levels=llevels,extend='both',cmap='BrBG_r')#'RdGy_r')#cmo.balance)#cmo.thermal)
+    #cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
+    #cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
+    plt.xlabel(r'radius $s$')
+    plt.ylabel(r'time $t$')
+    fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.085, orientation='horizontal', ticks=clevels, format='{x:.1f}')
+    #
+    plt.tight_layout()
+    plt.show()
 
 #-- Save True Fields analysis
 if ( l_save ):

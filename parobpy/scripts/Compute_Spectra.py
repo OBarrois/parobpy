@@ -255,13 +255,11 @@ for file in Gt_file_l[tstart::t_srate]:#[249:250]:#
     Eflu[n_s] = 0.5*(urf**2 + utf**2 + upf**2)[phi_sample]#
     Eflum[n_s] = 0.5*(urf**2 + utf**2 + upf**2).mean(axis=0)#
     Ezon[n_s] = 0.5*Vp**2#(urpm**2 + utpm**2 + Vp**2)#-- Already phi-Avg!
-    #Ekin[n_s] = 0.5*simps((Ekin[n_s].mean(axis=0)*2.*np.pi).T * np.sin(theta), theta, axis=1)
     Emag[n_s] = 0.5*Bdim*(Br**2 + Bt**2 + Bp**2)[phi_sample]#
     Emagm[n_s] = 0.5*Bdim*(Br**2 + Bt**2 + Bp**2).mean(axis=0)#
     Emaf[n_s] = 0.5*Bdim*(Brf**2 + Btf**2 + Bpf**2)[phi_sample]#
     Emafm[n_s] = 0.5*Bdim*(Brf**2 + Btf**2 + Bpf**2).mean(axis=0)#
     Emaz[n_s] = 0.5*Bdim*Bppm**2#(Brpm**2 + Btpm**2 + Bppm**2)#-- Already phi-Avg!
-    #Emag[n_s] = 0.5*simps((Emag[n_s].mean(axis=0)*2.*np.pi).T * np.sin(theta), theta, axis=1)
     #
 #-- end loop reading and computing Energies
 
@@ -574,7 +572,6 @@ transAx = mtransforms.ScaledTranslation(13.95+10/72, -45/72, fig.dpi_scale_trans
 ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
         fontsize=36, va='bottom', fontfamily='serif')
 if ( not l_save ):  plt.show()
-#plt.show()
 
 #-- Save True Fields analysis
 if ( l_save ):

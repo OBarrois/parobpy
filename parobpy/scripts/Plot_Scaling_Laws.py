@@ -7,7 +7,7 @@ Created on Mon Jun 22 2023
 Loads graphics file of the zonal velocity and plots the Torsional waves Width and max. Amplitude.
 To be checked against (Jault, 2008) theory: \delta = S^{-1/4}; max-Amp = S^{1/2}.
 
-Script to ONLY plot the TW width and Amplotude (one needs to use an other script to compute the TW t-s diagrams used here)!
+Script to ONLY plot the TW width and Amplitude (one needs to use an other script to compute the TW t-s diagrams used here)!
 """
 
 #import os
@@ -136,50 +136,6 @@ if ( l_check_all ):
     plt.tight_layout()
     plt.show()
 
-#-- witdh (NOTE: observed)
-if ( False ): #-- Old observations
-    l10 = 8e2; lh10 = 1.1e-3; em10 = 2e-7/0.144; w10 = 1.2596 - 0.7955; m10 = Vpcol10.max()
-    l1 = 1.6e3; lh1 = 1.1e-3; em1 = 1e-7/0.144; w1 = 1.2326 - 0.8088; m1 = Vpcol1.max()
-    l211 = 3.2e3; lh211 = 5.53e-4; em211 = 6.3e-9/0.0365; w211 = 1.1993 - 0.8391; m211 = Vpcol211.max()#w211 = 1.199156 - 0.83902; m211 = Vpcol211.max()# #-- S=3.2e3 (1e7 grid)
-    l21 = 3.2e3; lh21 = 1.1e-3; em21 = 5e-8/0.144; w21 = 1.2646 - 0.8273; m21 = Vpcol21.max() #; w21 = 1.2052 - 0.8004; m21 = Vpcol21.max()#W=Wrong-Pulsation
-    l212 = 3.2e3; lh212 = 5.53e-4; em212 = 6.3e-9/0.0365; w212 = 1.1984 - 0.8406; m212 = Vpcol212.max()#w212 = 1.1986 - 0.8406; m212 = Vpcol212.max()# #-- S=3.2e3 (1e8 grid)
-    l23 = 3.2e3; lh23 = 5.53e-4; em23 = 6.3e-9/0.0365; w23 = 1.1976 - 0.8427; m23 = Vpcol23.max() #-- S=3.2e3 (6.3e9 grid)
-    l24 = 8e3; lh24 = 1.1e-3; em24 = 2e-8/0.144; w24 = 1.2270 - 0.8433; m24 = Vpcol24.max() #; w24 = 1.1407 - 0.7455; m24 = Vpcol24.max()#W=Wrong-Pulsation
-    #-- witdh (NOTE: observed PATH)
-    l10 = 8e2; lh10 = 1.1e-3; em10 = 2e-7/0.144; w10 = 1.2470 - 0.7844; m10 = Vpcol10.max() #; w10 = 1.2646 - 0.8026#W=Not-so-Wrong-But-Still #; w10 = 1.2598 - 0.7962#W=Wrong-Pulsation
-    l1 = 1.6e3; lh1 = 1.1e-3; em1 = 1e-7/0.144; w1 = 1.2331 - 0.8089; m1 = Vpcol1.max()
-    l2 = 2.85e3; lh2 = 6.2e-4; em2 = 1e-8/0.046; w2 = 1.2926 - 0.9124; m2 = Vpcol2.max()
-    l3 = 6.8e3; lh3 = 2.6e-4; em3 = 3e-10/7.9e-3; w3 = 1.3198 - 1.0035; m3 = Vpcol3.max()
-    #
-    #- All Data. NOTE: Warning!:: Low/high lund has to be re-done to scale tau^*
-    ekm = [em10, em1, em2, em21, em211, em212, em23, em3, em24]
-    wid = [w10, w1, w2, w21, w211, w23, w212, w3, w24]
-    lun = [l10, l1, l2, l21, l211, l23, l212, l3, l24]
-    leh = [lh10, lh1, lh2, lh21, lh211, lh212, lh23, lh3, lh24]
-    mid = [m10, m1, m2, m21, m211, m212, m23, m3, m24]
-    #
-    #- Selected Data: Lehnert constant
-    ekm = [em10, em1, em21, em24] #ekm = [1.33**2*0.5, 1.33**2*1.0, 1.33**2*2.0, 1.33**2*5.0]
-    wid = [w10, w1, w21, w24]
-    lun = [l10, l1, l21, l24]
-    leh = [lh10, lh1, lh21, lh24]
-    mid = [m10, m1, m21, m24]
-    #
-    #- Selected Data: Path
-    ekm = [em10, em1, em2, em211, em212, em23, em3]
-    wid = [w10, w1, w2, w211, w212, w23, w3]
-    lun = [l10, l1, l2, l211, l212, l23, l3]
-    leh = [lh10, lh1, lh2, lh211, lh212, lh23, lh3]
-    mid = [m10, m1, m2, m211, m212, m23, m3]
-    #
-    #- Selected Data: Path only "compatible" data
-    ekm = [em1, em2, em3]
-    wid = [w1, w2, w3]
-    lun = [l1, l2, l3]
-    leh = [lh1, lh2, lh3]
-    mid = [m1, m2, m3]
-
-
 #-- witdh (NOTE: Observed WITH SAME TDIM!!)
 l0 = 1.21e3;    lh0 = 1.46e-3;  em0 = 3e-7/0.25;        w0= 1.238871 - 0.780668;    m0 = Vpcol0.max()     #-- S=1.21e3 (3.e-7 grid)
 l10 = 8e2;      lh10 = 1.1e-3;  em10 = 2e-7/0.144;      w10= 1.246824 - 0.784147;   m10 = Vpcol10.max()     #-- S=8.0e2 (1.e-7 grid)
@@ -228,24 +184,6 @@ wid = [w0,  w10,  w110,  w120,  w111,  w1,  w1h1,  w1h2,  w1h3,  w121,  w122,  w
 lun = [l0,  l10,  l110,  l120,  l111,  l1,  l1h1,  l1h2,  l1h3,  l121,  l122,  l112,  l113,  l114,  l130,  l2,  l21,  l211,  l212,  l23, l3,  l24,  l100]#
 leh = [lh0, lh10, lh110, lh120, lh111, lh1, lh1h1, lh1h2, lh1h3, lh121, lh122, lh112, lh113, lh114, lh130, lh2, lh21, lh211, lh212, lh23, lh3, lh24,  lh100]#
 mid = [m0,  m10,  m110,  m120,  m111,  m1,  m1h1,  m1h2,  m1h3,  m121,  m122,  m112,  m113,  m114,  m130,  m2,  m21,  m211,  m212,  m23,  m3,  m24,  m100]#
-#- Breaking down All Data.: Path Data
-ekm0 = [em0, em1, em2, em23, em3]
-wid0 = [w0,  w1,  w2,  w23,  w3]
-lun0 = [l0,  l1,  l2,  l23,  l3]
-leh0 = [lh0, lh1, lh2, lh23, lh3]
-mid0 = [m0,  m1,  m2,  m23,  m3]
-#- Breaking down All Data.: Extra controlled Data (Pulsation Okay)
-ekm1 = [em10, em111, em112, em113, em211, em212]
-wid1 = [w10,  w111,  w112,  w113,  w211,  w212]
-lun1 = [l10,  l111,  l112,  l113,  l211,  l212]
-leh1 = [lh10, lh111, lh112, lh113, lh211, lh212]
-mid1 = [m10,  m111,  m112,  m113,  m211,  m212]
-#- Breaking down All Data.: Rest of the Data (Wrong pulsation, 'suspicious' runs)
-ekm2 = [em100, em110, em120, em121, em122, em114, em130, em21, em24]
-wid2 = [w100,  w110,  w120,  w121,  w122,  w114,  w130,  w21,  w24]
-lun2 = [l100,  l110,  l120,  l121,  l122,  l114,  l130,  l21,  l24]
-leh2 = [lh100, lh110, lh120, lh121, lh122, lh114, lh130, lh21, lh24]
-mid2 = [m100,  m110,  m120,  m121,  m122,  m114,  m130,  m21,  m24]
 #
 #- Selected Data: Path only re-observed data at same tdim!
 ekmp = [em0, em1, em1h1, em1h2, em1h3, em2, em23, em3]
@@ -255,112 +193,7 @@ lehp = [lh0, lh1, lh1h1, lh1h2, lh1h3, lh2, lh23, lh3]
 midp = [m0, m1,  m1h1,  m1h2,  m1h3, m2, m23, m3]
 
 #------------------------------------------------------------------------------
-#%% Plot TW Width and max Amplitude change with Lundquist
-
-eps = 1.e-3
-lin1 = np.linspace(8e2,7e3,50)
-law1 = 3.*lin1**(-1/4)
-#lin1 = np.linspace(8e2,7e4,50)
-#law1 = 2.71*lin1**(-1/4)
-#plt.rcParams['text.usetex'] = False
-#-- Figure
-plt.figure(figsize=(14, 7.5))
-plt.subplot(211)
-#plt.loglog(lun,wid,'bo', lw=2.1, ms=10, label=r'Observed Width')
-plt.loglog(lun0,wid0,'b-*', lw=2.1, ms=13, label=r'Observed Width: Path')
-plt.loglog(lun1,wid1,'bo', lw=2.1, ms=12, label=r' ": Controlled')
-plt.loglog(lun2,wid2,'bd', lw=2.1, ms=11, label=r' ": Un-Controlled')
-plt.loglog(lin1,law1,'k--',alpha=0.8, label=r'$S^{-1/4}$')#label=r'$3\,S^{-1/4}$')#
-plt.xlim(min(lun)-eps,max(lun)-eps)
-#plt.xlim(min(lun)-eps,7e4)
-plt.xlabel('Lundquist S')
-plt.ylabel('Width')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-#
-law2 = 0.3*1.0*lin1**(1/2)
-plt.subplot(212)
-#plt.loglog(lun,mid,'ro', lw=2.1, ms=10, label=r'Observed Max Amplitude')
-plt.loglog(lun0,mid0,'r-*', lw=2.1, ms=13, label=r'Observed Max Amplitude: Path')
-plt.loglog(lun1,mid1,'ro', lw=2.1, ms=12, label=r' ": Controlled')
-plt.loglog(lun2,mid2,'rd', lw=2.1, ms=11, label=r' ": Un-Controlled')
-plt.loglog(lin1,law2,'k--',alpha=0.8, label=r'$S^{1/2}$')
-plt.xlim(min(lun)-eps,max(lun)-eps)
-plt.xlabel(r'Lundquist $S$')
-plt.ylabel(r'Amplitude')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-plt.tight_layout()
-#plt.show()
-
-#-- Lehnert scaling
-lin1 = np.linspace(2e-4,2e-3,50)
-#law1 = 20.*lin1**(1/4)
-law1 = 2.66*lin1**(1/4)
-#plt.rcParams['text.usetex'] = False
-#-- Figure
-plt.figure(figsize=(14, 7.5))
-plt.subplot(211)
-plt.loglog(leh,wid,'g-o', lw=2.1, ms=10, label=r'Observed Width')
-plt.loglog(lin1,law1,'k--',alpha=0.8, label=r'$\lambda^{1/4}$')#label=r'$3\,S^{-1/4}$')#
-plt.xlim(min(leh),max(leh))
-plt.xlabel('Lehnert lambda')
-plt.ylabel('Width')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-#
-plt.subplot(212)
-plt.loglog(leh,mid,'r-o', lw=2.1, ms=10, label=r'Observed Max Amplitude')
-plt.xlim(min(leh),max(leh))
-plt.xlabel('Lehnert lambda')
-plt.ylabel(r'Amplitude')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-plt.tight_layout()
-#plt.show()
-
-#-- EkM scaling
-lin1 = np.linspace(3e-8,2e-6,50)
-#law1 = 20.*lin1**(1/4)
-law1 = 3.*lin1**(1/8)
-#plt.rcParams['text.usetex'] = False
-#-- Figure
-plt.figure(figsize=(14, 7.5))
-plt.subplot(211)
-plt.loglog(ekm,wid,'yo', lw=2.1, ms=10, label=r'Observed Width')
-plt.loglog(np.array(lun)**(-1)*np.array(leh)**(1),wid,'m*', lw=2.1, ms=10, alpha=0.8, label=r'S^(-1)*\lambda')
-plt.loglog(lin1,law1,'k--',alpha=0.8, label=r'$EkM^{1/4}$')#label=r'$3\,S^{-1/4}$')#
-plt.xlim(min(ekm),max(ekm))
-plt.xlabel('Magnetic Ekman EkM')
-plt.ylabel('Width')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-#
-plt.subplot(212)
-plt.loglog(ekm,mid,'ro', lw=2.1, ms=10, label=r'Observed Max Amplitude')
-plt.xlim(min(ekm),max(ekm))
-plt.xlabel('Magnetic Ekman EkM')
-plt.ylabel(r'Amplitude')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-plt.tight_layout()
-plt.show()
-
-#------------------------------------------------------------------------------
-#%% Invert Width and max Amplitude change with Multi-parameters!
-
+#%% Plot TW Width and max Amplitude change with Multi-parameters!
 
 eps = 1.e-3
 plt.rcParams['text.usetex'] = True
@@ -371,9 +204,6 @@ law1 = 2.75*lin1**(-1/4)
 fig = plt.figure(figsize=(22, 6.5))
 ax = plt.subplot(111)
 ax.loglog(lun,wid,'bo', lw=2.1, ms=11, label=r'Observed Width')
-#plt.loglog(lun0,wid0,'b-*', lw=2.1, ms=13, label=r'Observed Width: Path')
-#plt.loglog(lun1,wid1,'bo', lw=2.1, ms=12, label=r' ": Controlled')
-#plt.loglog(lun2,wid2,'bd', lw=2.1, ms=11, label=r' ": Un-Controlled')
 ax.loglog(lin1,law1,'k--', lw=1.7,alpha=0.8, label=r'$S^{-1/4}$')#label=r'$3\,S^{-1/4}$')#
 plt.xlim(min(lun)-eps,max(lun)-eps)
 plt.xlabel(r'Lundquist, $S$', fontsize=36)
@@ -389,7 +219,7 @@ ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
         fontsize=36, va='bottom', fontfamily='serif')
 plt.tight_layout()
 if ( l_save ):  plt.savefig(savePlot+'Scaling_TO_Width-vs-Lundquist_Path-Allp-Aligned.pdf')
-plt.show()
+#plt.show()
 
 #-- EkM scaling
 lin1 = np.linspace(3e-8,8e-5,50)
@@ -399,7 +229,6 @@ law1 = 2.55*lin1**(1/8)
 fig = plt.figure(figsize=(22, 6.5))
 ax = plt.subplot(111)
 ax.loglog(ekm,wid,'yo', lw=2.1, ms=11, label=r'Observed Width')
-#plt.loglog(np.array(lun)**(-1)*np.array(leh)**(1),wid,'m*', lw=2.1, ms=10, alpha=0.8, label=r'S^(-1)*\lambda')
 ax.loglog(lin1,law1,'k--', lw=1.7,alpha=0.8, label=r'$(Ek_M)^{1/4}$')#label=r'$3\,S^{-1/4}$')#
 plt.xlim(min(ekm),max(ekm))
 plt.xlabel(r'Magnetic Ekman, $Ek_M$', fontsize=36)
@@ -415,41 +244,6 @@ ax.text(0.0, 1.0, r'$(b)$', transform=ax.transAxes + transAx,
         fontsize=36, va='bottom', fontfamily='serif')
 plt.tight_layout()
 if ( l_save ):  plt.savefig(savePlot+'Scaling_TO_Width-vs-EkMag_Path-Allp-Aligned.pdf')
-plt.show()
-
-#plt.rcParams['text.usetex'] = False
-#-- Multivariate scaling
-lin1 = np.linspace(3e-8,2e-6,50)
-#law1 = 20.*lin1**(1/4)
-law1 = 3.*lin1**(1/8)
-#plt.rcParams['text.usetex'] = False
-#newlaw = np.array(lun)**(1)*np.array(leh)**(1) #-- Bad! = Elsasser
-newlaw = np.array(lun)**(-1/2)*np.array(leh)**(1) #-- Quite good!
-#newlaw = np.array(lun)**(-1/2)*np.array(leh)**(1/2) #-- good (less good on amp)!
-#newlaw = np.array(lun)**(-1/4)*np.array(leh)**(1) #-- good (less good on amp)!
-#-- Figure
-plt.figure(figsize=(14, 7.5))
-plt.subplot(211)
-plt.loglog(newlaw,wid,'m*', lw=2.1, ms=10, alpha=0.8, label=r'Observed Max Amplitude')
-#plt.loglog(lin1,law1,'k--',alpha=0.8, label=r'$EkM^{1/4}$')#label=r'$3\,S^{-1/4}$')#
-plt.xlim(min(newlaw),max(newlaw))
-plt.xlabel(r'S^(-1/2)*\lambda')
-plt.ylabel('Width')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-#
-plt.subplot(212)
-plt.loglog(newlaw,mid,'kd', lw=2.1, ms=10, alpha=0.8, label=r'Observed Max Amplitude')
-plt.xlim(min(newlaw),max(newlaw))
-plt.xlabel(r'S^(-1/2)*\lambda')
-plt.ylabel(r'Amplitude')
-#plt.gca().xaxis.set_ticks_parameters(labelsize=36)
-#plt.gca().yaxis.set_ticks_parameters(labelsize=36)
-plt.grid(ls=':')
-plt.legend(fontsize=18)
-plt.tight_layout()
 plt.show()
 
 #-- End Script

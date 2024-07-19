@@ -464,63 +464,6 @@ cb.ax.tick_params(labelsize=32)
 plt.tight_layout()
 if ( not l_save ):  plt.show()
 
-if ( False ):
-    #-- Ekin_zon
-    ffield = Ezoncol#Ekin[:,ntheta//2,:]
-    Mratio = np.log(np.sqrt(ffield))
-    fig = plt.figure(figsize=(11, 9.2))
-    cmax = abs(Mratio[:,:]).max()*0.12
-    llevels=np.linspace(0.,cmax,64)
-    clevels=np.linspace(0.,cmax,5)
-    ax = plt.subplot(111)
-    #cf = ax.contourf(radius,tdim,Mratio[:,:],levels=llevels,extend='both',cmap=cmo.thermal)
-    #cf = ax.contourf(radius,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
-    cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
-    plt.xlabel(r'radius $s$')
-    plt.ylabel(r'time $t$')
-    fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.085, orientation='horizontal')#, ticks=clevels, format='{x:.1f}')
-    #
-    plt.tight_layout()
-    plt.show()
-    #
-    Emagcol = Emagcol2.copy()
-    Emafcol = Emafcol2.copy()
-    Emazcol = Emazcol2.copy()
-    Emagmcol = Emagmcol2.copy()
-    Emafmcol = Emafmcol2.copy()
-    #
-    Bratio = 1./(Ek*Pm)# 1.33**2*(Lehnert)/(Ek)#(Ek)/(Lehnert)#
-    Emagcol*=Bratio
-    Emafcol*=Bratio
-    Emazcol*=Bratio
-    Emagmcol*=Bratio
-    Emafmcol*=Bratio
-    #
-    Emagcol2 = Emagcol.copy()
-    Emafcol2 = Emafcol.copy()
-    Emazcol2 = Emazcol.copy()
-    Emagmcol2 = Emagmcol.copy()
-    Emafmcol2 = Emafmcol.copy()
-    #
-    Ekincol2 = Ekincol.copy()
-    Eflucol2 = Eflucol.copy()
-    Ezoncol2 = Ezoncol.copy()
-    Ekinmcol2 = Ekinmcol.copy()
-    Eflumcol2 = Eflumcol.copy()
-    #
-    Ekincol = Ekincol2.copy()
-    Eflucol = Eflucol2.copy()
-    Ezoncol = Ezoncol2.copy()
-    Ekinmcol = Ekinmcol2.copy()
-    Eflumcol = Eflumcol2.copy()
-    #
-    Uratio = 1./Lehnert#1./(Ek/Lehnert)
-    Ekincol/=Uratio
-    Eflucol/=Uratio
-    Ezoncol/=Uratio
-    Ekinmcol/=Uratio
-    Eflumcol/=Uratio
-
 #-- Save True Fields analysis
 if ( l_save ):
     plt.figure(1)
@@ -632,27 +575,6 @@ ax.text(0.0, 1.0, r'$(a)$', transform=ax.transAxes + transAx,
         fontsize=36, va='bottom', fontfamily='serif')
 if ( not l_save ):  plt.show()
 #plt.show()
-
-if ( False ):
-    #-- Emag/Ekin_zon
-    #Upcol2 = field_M2.sum(axis=1)#from upcol
-    #Lcol2 = field_M2.sum(axis=1)#from fieldzcol
-    ffield = (Emagcol+epss)/(Ezoncol+epss)
-    Mratio = np.log(np.sqrt(ffield))#np.log(np.sqrt((Lcol2+epss)/(Upcol2+epss)))
-    fig = plt.figure(figsize=(11, 9.2))
-    cmax = (Mratio[:,:]).max()*0.9
-    llevels=np.linspace(-cmax,cmax,64)
-    clevels=np.linspace(-cmax,cmax,5)
-    ax = plt.subplot(111)
-    cf = ax.contourf(sr,tdim,Mratio[:,:],levels=llevels,extend='both',cmap='BrBG_r')#'RdGy_r')#cmo.balance)#cmo.thermal)
-    #cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
-    #cf = ax.contourf(sr,tdim,Mratio[:,:],levels=64,extend='both',cmap=cmo.thermal)
-    plt.xlabel(r'radius $s$')
-    plt.ylabel(r'time $t$')
-    fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.085, orientation='horizontal', ticks=clevels, format='{x:.1f}')
-    #
-    plt.tight_layout()
-    plt.show()
 
 #-- Save True Fields analysis
 if ( l_save ):

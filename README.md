@@ -18,6 +18,10 @@ This package has been adapted from the paropy package created by J.Wong (https:/
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
+## DOI
+
+10.5281/zenodo.12820318
+
 ## Acknowledgments
 
 * [**Jenny Wong**](https://jnywong.netlify.app/)

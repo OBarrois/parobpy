@@ -34,11 +34,45 @@ if ( not l_show ): #-- Recommended if running the script only to compute and sto
 
 #-- Lehnert number, \lambda = B/{sqrt(rho mu) * Omega*d}.
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e7', 'Pm0o25', 1.46e-3, 1.0, 'b3', '0.000280800' # 3e-7 S=1214.1
-run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'b4', '0.000040320' # 1e-7
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathBase', 1.1e-3, 1.0, 'b4-p', '0.000008755' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'b4', '0.000040320' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'bbi1e7', '0.000071360' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1BIS', 1.1e-3, 1.0, 'bbi1e7B', '0.000020800' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_per', 1.1e-3, 1.0, 'bbi1e7p', '0.000147200' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_perSin20000/Lund4e2', 4.2e-3, 1.0, 'bbi1e7ps20000lS', '0.000109200' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin70000pb', 1.48e-3, 1.0, 'bbi1e7ps70000pb', '0.000183040' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin4096pb/ElssTwice', 1.57e-3, 1.0, 'bbi1e7ps4096pbhE', '0.000183040' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin20000pb/ElssHalf', 7.84e-4, 1.0, 'bbi1e7ps20000pblE', '0.000409600' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin10000pb/ElssTrue', 1.1e-3, 0.565, 'bbi1e7ps10000pbtE', '0.000410880' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin85000pb/IY66', 1.1e-3, 1.0, 'bbi1e7ps85000pbiY66', '0.000183040' # 1e-7
+run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin10000', 1.1e-3, 1.0, 'bbi1e7ps10000', '0.000600000' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin10000/ElssTwice', 1.57e-3, 1.0, 'bbi1e7ps10000hE', '0.000614400' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin70000/ElssHalf', 7.84e-4, 1.0, 'bbi1e7ps70000lE', '0.000612800' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin160000/BY66-IY66', 1.1e-3, 1.0, 'bbi1e7ps160000bfY66i', '0.000586000' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin20000/IY66', 1.1e-3, 1.0, 'bbi1e7ps20000iY66', '0.000628800' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1Long', 1.1e-3, 1.0, 'b4-long', '0.000614400' # 1e-7
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathLund3o2e3', 5.53e-4, 1.0, 'b4o6', '0.000015600' # 6.3e-9 (1e7 grid)
-#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', '', 5.4e-4, 1.0, 'b4o5', '0.000024896' # 1e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Stoch', 1.1e-3, 1.0, 'b6', '0.000053120' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'All_Parameters_Modified/Pm1o44e-2', 3.50e-3, 1.0, 'b4-2', '0.000008640' # 1e-7 # All param. modified!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o0e-1', 1.1e-3, 1.0, 'b4-3', '0.000090240' # 7e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm2o88e-1', 1.1e-3, 1.0, 'b3-bis', '0.000144000' # 2e-7
+#un_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathBase', 1.1e-3, 1.0, 'b4-p', '0.000008755' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'All_Parameters_Modified/PmHalf', 1.56e-3, 1.0, 'b4-2-bis', '0.000154240' # 1e-7 # All param. modified!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'All_Parameters_Modified/ElssHalf', 1.40e-3, 0.8, 'b4-2-ter', '0.000155200' # 1e-7 # All param. modified!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lund8e2', 1.1e-3, 0.5, 'b4-5', '0.000288000' # 2e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lund3o2e3', 1.1e-3, 2.0, 'b4-5-bis', '0.000077920' # 5e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lund1o6e4', 1.1e-3, 5.0, 'b4-5-ter', '0.000031680' # 2e-8 #Actually Lund8e3!!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'All_Parameters_Modified/Lund2', 1.57e-3, 1.0, 'b4-5-bis', '0.000288000' # 2e-7 # All param. modified!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lehn2o2e-4', 2.2e-4, 0.2, 'b4-4-ter', '0.000072000' # 2e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lehn5o5e-4', 5.5e-4, 0.5, 'b4-4', '0.000058080' # 5e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Lehn2o2e-3', 2.2e-3, 2.0, 'b4-4-bis', '0.000152960' # 2e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'All_Parameters_Modified/Lehn2', 7.84e-4, 1.0, 'b4-4-bis', '0.000162800' # 5e-8 # All param. modified!
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'PathLund3o2e3', 5.53e-4, 1.0, 'b4o6-2', '0.000008800' # 6.3e-9 (1e8 grid)
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'PathLund3o2e3BIS', 5.53e-4, 1.0, 'b4o6-2', '0.000009080' # 6.3e-9 (1e8 grid)BIS
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1', 6.2e-4, 1.0, 'b4o5', '0.000021840' # 1e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1', 6.2e-4, 1.0, 'bbi1e8', '0.000015040' # 1e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1BIS', 6.2e-4, 1.0, 'b4o5', '0.000024896' # 1e-8
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '6e9', 'Pm0o36e-1', 5.53e-4, 1.0, 'b4o63', '0.000015560' # 6.3e-9
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '6e9', 'Pm0o36e-1BIS', 5.53e-4, 1.0, 'b4o63B', '0.000019760' # 6.3e-9
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e10', '', 2.6e-4, 1.0, 'b5', '0.000001456' # 3e-10
 
 #saveDir = '/gpfs/users/obarrois/Parodys/Outputs/Data/' # if you use python directly from cluster
@@ -69,7 +103,7 @@ saveDir = '/Users/obarrois/Desktop/Parodys/Outputs/Waves'+run_Ek+'/Balances/Data
 l_read_bal = 1 # read balances?
 l_read_balzavg = 1 # save zAvg-balances?
 l_read_ja = 1 # not for every cases...
-tagRead = '_-phi-Avg_n500'#_-phi-Avg_n600'#_-phi-Avg_n500_lowLund'#_-phi-Avg_n500_lowLehn'#_-phi-Avg_n500_lowerPm'# #  # tag at the end of the forces files if needed
+tagRead = '_-phi-Avg_n500_perSin10000'#_-phi-Avg_n500_Long'#_-phi-Avg_n500_Y66'#_-phi-Avg_n600'#_-phi-Avg_n500_lowLund'#_-phi-Avg_n500_lowLehn'#_-phi-Avg_n500_lowerPm'# #  # tag at the end of the forces files if needed
 l_save = 1 # save main figures?
 l_spdf = 1 # save figures in pdf format? (Format Barrois and Aubert 2024)
 l_fix_CB = 1 # impose a pre-defined Colorbar or let matplotlib decide?
@@ -104,6 +138,10 @@ Elsasser = 1.33 #-- Computed from Bessel B0_tot field #NOTE: Actually Brms from 
 #Elsasser = Elsasser*np.sqrt(0.5) #-- if changing parameters #/(4./3.)
 #Lehnert = np.sqrt(Elsasser**2*Ek/Pm)
 #Lundquist = np.sqrt(Elsasser**2*Pm/Ek)
+
+#Lehnert = 1.1e-3*np.sqrt(2.)
+#Ek = 7.e-8
+#Pm = 0.1
 
 phir = phi.copy()
 nphir = nphi
@@ -152,6 +190,12 @@ if ( l_curl_b0 ):
         #
         sh = shtns.sht(l_max, m_max)
         nlat, nlon = sh.set_grid(nphi=nphir, nlat=ntheta)
+        if ( False ):#if ( not l_resym and minc !=1 ): # Test to get tab2 like in curlbal_QGA_4_JA.m
+            sh.imtab = sh.m.copy()
+            for lm in range(sh.nlm):
+                if ( np.mod(lm,3) != 0 ):
+                    sh.imtab[lm] = 0
+            sh.m = sh.imtab
     else:
         sh = None
     #
@@ -185,13 +229,19 @@ if ( l_curl_b0 ):
     #-- checking plots for b0
     if ( l_check_b0 and rank==0 ):
         n_s = 4
-        n_levels=21
-        radialContour(B0r[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
-        radialContour(B0t[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
-        radialContour(B0p[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+        n_levels=31
+        radialContour(B0r[:,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
+        radialContour(B0t[:,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
+        radialContour(B0p[:,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
         merContour(B0r.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
         merContour(B0t.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
         merContour(B0p.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+        radialContour(B02r[:24,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
+        radialContour(B02t[:24,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
+        radialContour(B02p[:24,:,-1], rad=0, levels=n_levels, cm='PuOr_r')
+        merContour(B02r.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+        merContour(B02t.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+        merContour(B02p.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
         plt.show()
 
 #------------------------------------------------------------------------------
@@ -553,7 +603,7 @@ if ( l_double_plot ):
     rtraj2 = np.zeros((n_Asteps),); ttraj2 = np.zeros_like(rtraj)
     #rtraj2[0] = srja[0]; ttraj2[0] = tdim[0]
     rtraj2[0] = 0.54; ttraj2[0] = 0.
-    advtime = 1.e-2
+    advtime = 5.e-3#1.e-2#
     for istep in range(1,n_Asteps):
         i = np.sum(radius<=rtraj2[istep-1]) #i=sum(r<=rtraj(step-1));
         j = np.sum(tdim<=ttraj2[istep-1]) #j=sum(tt<=ttraj(step-1));
@@ -608,7 +658,7 @@ if ( run_Ek == '1e7' ):
             CBmax=3.e8
     else:
         if ( l_tau_A ):
-            CBmax=5.e3#8.e0
+            CBmax=6e3##1e3#3.e4#5.e3#8.e0
         else:
             CBmax=1.e8
 elif ( run_Ek == '1e8' ):
@@ -649,6 +699,71 @@ if ( not l_old_plot ):
         rjplot2 = (rtraj2 - rtraj2[0])/(rtraj2 - rtraj2[0]).max()*(len(srja[::rprate])-1)
 
 #------------------------------------------------------------------------------
+#%% Test compute directly Va (to avoid saving one file per run...)
+
+if ( False ):
+    from scipy.integrate import simps
+    Bs = sint3D*B0r + cost3D*B0t #Bs=mmsint.*Br+mmcost.*Bt;
+    Bs2 = Bs**2 #Bs2=Bs.^2;
+    #
+    tmp = simps((Bs2.mean(axis=0)*np.pi).T*np.sin(theta), theta)
+    ABs2 = -simps(tmp*radius**2, radius)
+    #
+    #-- Va norm
+    integs = Bs2.mean(axis=0)
+    hs, rs, Bs2col = zavg(integs[..., ::-1], rrad, nsmax, colat=theta, minc=1, normed=True, save=False) 
+    #
+    # sc2=squeeze(mean(Bs2))';
+    Bs2colja = np.zeros_like(omzcolja[0])
+    for i in range(nsmaxja):
+        Bs2colja[n_s,i] = np.sum(integs[n_s]*zslice[:,:,i]) #sum(sum(sc2.*squeeze(slice(:,:,ir))));
+
+    Va = Bs2col/1.33 #Va=Bscol(ng:nr)./1.33; #1.33 --> Bs2.mean()? no...
+    #
+    #-- Va fast
+    integs = Bs2.mean[1]
+    hs, rs, Bs2col = zavg(integs[..., ::-1], rrad, nsmax, colat=theta, minc=1, normed=True, save=False) 
+    #
+    # sc2=squeeze(Bs2(1,:,:))';
+    Bs2colja = np.zeros_like(omzcolja[0])
+    for i in range(nsmaxja):
+        Bs2colja[n_s,i] = np.sum(integs[n_s]*zslice[:,:,i]) #sum(sum(sc2.*squeeze(slice(:,:,ir))));
+
+    Va_fast = Bs2col/1.33 #Va=Bscol(ng:nr)./1.33;
+    #
+    #-- Va slow
+    integs = Bs2.mean[1]
+    hs, rs, Bs2col = zavg(integs[..., ::-1], rrad, nsmax, colat=theta, minc=1, normed=True, save=False) 
+    #
+    # sc2=squeeze(Bs2(nphi//12,:,:))';
+    Bs2colja = np.zeros_like(omzcolja[0])
+    for i in range(nsmaxja):
+        Bs2colja[n_s,i] = np.sum(integs[n_s]*zslice[:,:,i]) #sum(sum(sc2.*squeeze(slice(:,:,ir))));
+
+    Va_slow = Bs2col/1.33 #Va=Bscol(ng:nr)./1.33;
+
+#-- Not sure about the next few lines
+if ( False ):
+    from parobpy.core_properties import earth_radius
+    Valfmean = np.loadtxt(dirva+'Va') # NOTE: Val defined with radius from parody: not practical to use sr or cylindrical radius
+    hs = np.sqrt(radius[-1]**2 - (radius*np.sin(theta[ntheta//2]))**2) #np.sqrt(sr[0]**2 - sr[1:]**2)
+    #Omega = 2.* np.pi* earth_radius / (23. * 60.*60. + 56*60. + 4.)  # 1 rotation per day
+    #Omega/=Valfmean[:-1].mean()#/=Ek
+    Omega=1./Lehnert
+    k_wave = 32; m_wave = 3
+    k_0 = (m_wave*Omega/hs[2:-2].mean()**2)**(1/3)
+    #ks_0 = (m_wave*Omega*Valfmean[:-1].mean()/Valfmean[:-1]/hs[:-1]**2)**(1/3)
+    #-- Alfven waves --> actually mixed between Aflven and MC waves
+    omVa = Valfmean*k_wave + m_wave*Omega/(k_wave**2 * hs**2)
+    omMiC= m_wave*Omega/(k_wave**2 * hs**2) + np.sqrt( (Valfmean*k_wave)**2 + (m_wave*Omega/(k_wave**2 * hs**2))**2 )
+    #omMiC= m_wave*Omega/(k_wave**2 * hs**2) + np.sqrt( (Lehnert/Ek*k_wave)**2 + (m_wave*Omega/(k_wave**2 * hs**2))**2 )
+    k_max = 71
+    omMiT = np.zeros((k_max,len(Valfmean)),)
+    for k_wave  in range(k_max):
+        omMiT[k_wave] = m_wave*Omega/(k_wave**2 * hs**2) + np.sqrt( (Valfmean*k_wave)**2 + (m_wave*Omega/(k_wave**2 * hs**2))**2 )
+        #omMiT[k_wave] = m_wave*Omega/(k_wave**2 * hs**2) + np.sqrt( (Lehnert/Ek*k_wave)**2 + (m_wave*Omega/(k_wave**2 * hs**2))**2 )
+
+#------------------------------------------------------------------------------
 #%% Main Plots
 
 #-- Plot s-z-avg-profiles of different force balances as a function of time
@@ -656,6 +771,16 @@ if ( not l_old_plot ):
     import matplotlib.transforms as mtransforms
     zavgcolormap = cmo.curl#cmo.tarn_r#cmo.balance#'seismic'#
     plt.rcParams['text.usetex'] = True
+    plt.rc('font', **{'family': 'serif'})#, 'serif': ['Computer Modern']})
+    #plt.rc('text', usetex=True)
+    tdim*=2. #Alfven time to physically redimensionalise
+    sr*=2258.5 #Alfven time to physically redimensionalise
+    y_lim = 14.02#7.07#tdim[-1]# 6.03# 1.76# 3.52# 5.3# 2.08# 
+    n_tstart = 142-28#--> to remove the transient part: 130+12(otherwise shows 4 in t-axis) for Path cases
+    l_plot_Va = False
+    CNorm = np.amax(abs(Corcol))#1.0#
+    CBmax = 1e0#4e3#
+    ILab = 0
 if ( rank==0 ):
     n_steps=-rprate
     ny_labels = 6
@@ -681,6 +806,17 @@ if ( rank==0 ):
         plt.xticks(x_post,x_axis)
         plt.yticks(y_post,y_axis)
         plt.colorbar(shrink=0.5, orientation='vertical')
+        #-- Velocity
+        if ( False ):
+            pmax = np.amax(abs(Vpcol[:,::n_steps]))/2.
+            plt.figure()
+            plt.imshow((Vpcol*Vpcol*np.cos(3*np.pi/4.))[::-1,::n_steps], vmin=-pmax, vmax=pmax, cmap=cmo.balance)
+            plt.title('z-Avg uphi')
+            plt.ylabel('Time')
+            plt.xlabel('Cylindrical radius')
+            plt.xticks(x_post,x_axis)
+            plt.yticks(y_post,y_axis)
+            plt.colorbar(shrink=0.5, orientation='vertical')
     else:
         #llevels=np.linspace(-pmax,pmax,64)
         clevels=np.linspace(-pmax,pmax,7)
@@ -691,13 +827,13 @@ if ( rank==0 ):
         if ( l_plot_Va ): ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
         plt.xlabel(r'Cylindrical radius', fontsize=36)
         plt.ylabel(r'Time', fontsize=36)
-        plt.ylim(tdim[0],1.76)#tdim[-1])
+        plt.ylim(tdim[n_tstart],y_lim)#tdim[-1])#1.76)#3.52)#5.3)#2.08)#
         plt.gca().xaxis.set_tick_params(labelsize=32)
         plt.gca().yaxis.set_tick_params(labelsize=32)
         cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels, format=r'${x:.1f}$')
         cb.ax.tick_params(labelsize=32)
         transAx = mtransforms.ScaledTranslation(8.35+10/72, -45/72, fig.dpi_scale_trans)
-        ax.text(0.0, 1.0, PLabels[0], transform=ax.transAxes + transAx,
+        ax.text(0.0, 1.0, PLabels[0+ILab], transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
         plt.tight_layout()
         #plt.show()
@@ -757,20 +893,20 @@ if ( rank==0 ):
             fig = plt.figure(figsize=(11.9, 11.3))
         ax = plt.subplot(111)
         #cf = ax.contourf(sr,tdim,domzcol,levels=llevels,extend='both',cmap=cmo.balance)#'seismic')#
-        cf = ax.pcolormesh(sr,tdim,domzcol,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
+        cf = ax.pcolormesh(sr,tdim,domzcol/CNorm,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
         #cf = ax.imshow(domzcol[::-1,::n_steps], vmin=-pmax, vmax=pmax, cmap='seismic')#cmo.balance)#
         if ( l_plot_Va ):
             ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
             ax.plot(rtraj2, ttraj2, color=trajcolor2, ls='-.',marker='', lw='6.4', alpha=0.9) # Va_fast
-        plt.xlabel(r'Cylindrical radius', fontsize=36)
-        plt.ylabel(r'Time', fontsize=36)
-        plt.ylim(tdim[0],1.76)#tdim[-1])
+        plt.xlabel(r'Cylindrical radius, ($km$)', fontsize=36)
+        plt.ylabel(r'Time, ($y$)', fontsize=36)
+        plt.ylim(tdim[n_tstart],y_lim)#tdim[-1])#
         plt.gca().xaxis.set_tick_params(labelsize=32)
         plt.gca().yaxis.set_tick_params(labelsize=32)
         cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels)#, format=r'${x:.1f}$')#
         cb.ax.tick_params(labelsize=32)
         transAx = mtransforms.ScaledTranslation(8.65+10/72, -45/72, fig.dpi_scale_trans)
-        ax.text(0.0, 1.0, PLabels[1], transform=ax.transAxes + transAx,
+        ax.text(0.0, 1.0, PLabels[1+ILab], transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
         plt.tight_layout()
         if ( l_spdf ):  cb.remove()
@@ -798,20 +934,20 @@ if ( rank==0 ):
             fig = plt.figure(figsize=(11.9, 11.3))
         ax = plt.subplot(111)
         #cf = ax.contourf(sr,tdim,Lorcol,levels=llevels,extend='both',cmap=zavgcolormap)#
-        cf = ax.pcolormesh(sr,tdim,Lorcol,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
+        cf = ax.pcolormesh(sr,tdim,Lorcol/CNorm,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
         #cf = ax.imshow(Lorcol[::-1,::n_steps], vmin=-pmax, vmax=pmax, cmap='seismic')#cmo.balance)#
         if ( l_plot_Va ):
             ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
             ax.plot(rtraj2, ttraj2, color=trajcolor2, ls='-.',marker='', lw='6.4', alpha=0.9) # Va_fast
-        plt.xlabel(r'Cylindrical radius', fontsize=36)
-        plt.ylabel(r'Time', fontsize=36)
-        plt.ylim(tdim[0],1.76)#tdim[-1])
+        plt.xlabel(r'Cylindrical radius, ($km$)', fontsize=36)
+        plt.ylabel(r'Time, ($y$)', fontsize=36)
+        plt.ylim(tdim[n_tstart],y_lim)#tdim[-1])#
         plt.gca().xaxis.set_tick_params(labelsize=32)
         plt.gca().yaxis.set_tick_params(labelsize=32)
         cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels)#, format=r'${x:.1f}$')#
         cb.ax.tick_params(labelsize=32)
         transAx = mtransforms.ScaledTranslation(8.65+10/72, -45/72, fig.dpi_scale_trans)
-        ax.text(0.0, 1.0, PLabels[2], transform=ax.transAxes + transAx,
+        ax.text(0.0, 1.0, PLabels[2+ILab], transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
         plt.tight_layout()
         if ( l_spdf ):  cb.remove()
@@ -836,20 +972,20 @@ if ( rank==0 ):
         fig = plt.figure(figsize=(11.9, 11.3))
         ax = plt.subplot(111)
         #cf = ax.contourf(sr,tdim,Corcol,levels=llevels,extend='both',cmap=cmo.balance)#'seismic')#
-        cf = ax.pcolormesh(sr,tdim,Corcol,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
+        cf = ax.pcolormesh(sr,tdim,Corcol/CNorm,vmin=-pmax,vmax=pmax,antialiased=True,shading='gouraud',rasterized=True,cmap=zavgcolormap)#
         #cf = ax.imshow(Corcol[::-1,::n_steps], vmin=-pmax, vmax=pmax, cmap='seismic')#cmo.balance)#
         if ( l_plot_Va ):
             ax.plot(rtraj, ttraj, color=trajcolor, ls='-',marker='', lw='6.4', alpha=0.9) # Va_mean
             ax.plot(rtraj2, ttraj2, color=trajcolor2, ls='-.',marker='', lw='6.4', alpha=0.9) # Va_fast
-        plt.xlabel(r'Cylindrical radius', fontsize=36)
-        plt.ylabel(r'Time', fontsize=36)
-        plt.ylim(tdim[0],1.76)#tdim[-1])
+        plt.xlabel(r'Cylindrical radius, ($km$)', fontsize=36)
+        plt.ylabel(r'Time, ($y$)', fontsize=36)
+        plt.ylim(tdim[n_tstart],y_lim)#tdim[-1])#
         plt.gca().xaxis.set_tick_params(labelsize=32)
         plt.gca().yaxis.set_tick_params(labelsize=32)
         cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels)#, format=r'${x:.1f}$')#
         cb.ax.tick_params(labelsize=32)
         transAx = mtransforms.ScaledTranslation(8.65+10/72, -45/72, fig.dpi_scale_trans)
-        ax.text(0.0, 1.0, PLabels[3], transform=ax.transAxes + transAx,
+        ax.text(0.0, 1.0, PLabels[3+ILab], transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
         plt.tight_layout()
         #plt.show()
@@ -887,13 +1023,13 @@ if ( rank==0 ):
         #cf = ax.imshow(Residuals[::-1,::n_steps], vmin=-pmax, vmax=pmax, cmap='seismic')#cmo.balance)#
         plt.xlabel(r'Cylindrical radius', fontsize=36)
         plt.ylabel(r'Time', fontsize=36)
-        plt.ylim(tdim[0],1.76)#tdim[-1])
+        plt.ylim(tdim[n_tstart],y_lim)#tdim[-1])#
         plt.gca().xaxis.set_tick_params(labelsize=32)
         plt.gca().yaxis.set_tick_params(labelsize=32)
         cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.05, orientation='vertical', ticks=clevels)#, format=r'${x:.1f}$')#
         cb.ax.tick_params(labelsize=32)
         transAx = mtransforms.ScaledTranslation(8.65+10/72, -45/72, fig.dpi_scale_trans)
-        ax.text(0.0, 1.0, PLabels[0], transform=ax.transAxes + transAx,
+        ax.text(0.0, 1.0, PLabels[0+ILab], transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
         plt.tight_layout()
     if ( not l_save ): plt.show()

@@ -73,6 +73,7 @@ PLabels = [r'$(a)$', r'$(a)$', r'$(b)$', r'$(c)$', r'$(d)$', r'$(e)$',  r'$(f)$'
 
 l_resym = True # re-symmetrizing the data if minc !=1
 l_curl_b0 = True # computing curl of Background field B0
+l_plot_path = True #p plotting the complex or the simple bessel-based B0
 
 l_check_all = True # display all check plot figures
 l_save = 0 # save figures?
@@ -98,18 +99,45 @@ filename = directory + Gt_file
         _, _, _, _, _, _, _) = parodyload(filename)
 
 #-- for double check
+run_Pm = 'PathBase'
+if ( run_Pm == 'PathBase' ):
+    print('Path-based B0')
+    minc = 1
+    basedir = '/Users/obarrois/Desktop/stella/Work/' # basefield copied on stella
+    basename = basedir+'basefield_path.mat' # if you use python directly from cluster
+    nphi=480 #NOTE: easier to hard code but should load a path case if one needs nphi to be right
+    Elsasser = 1.77
+elif ( run_Pm == 'BY66' ):
+    print('Y66 B0')
+    minc = 3
+    basedir = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/' # basefield copied on stella
+    basename = basedir+'basefieldY66.mat' # if you use python directly from cluster
+    Elsasser = 1.33
+else:
+    print('Y33 B0')
+    minc = 3
+    basedir = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/' # basefield copied on stella
+    basename = basedir+'basefield.mat' # if you use python directly from cluster
+    Elsasser = 1.74
+B0rR, B0tR, B0pR, _, _, _ = load_basefield(basename,nr,ntheta,nphi)
+
+#-- Dimensionless parameters and Time Redimensionalisation
+Lehnert = np.sqrt(Elsasser**2*(Ek/Pm))
+tredim = 1./(Ek/Lehnert)
+Bdim = 1./(Pm*Ek)#(Pm*Ek)/(Pm*Lehnert)# NOTE: Viscous scaling because all quantities are directly from Parody (would have to rescale U and B differently if one wants to use Alfvén units)
+
+#-- Re-symmetrisation if minc != 1
 phir = phi.copy()
 nphir = nphi
-if ( l_check_all ):
-    basename ='/Users/obarrois/Desktop/Base_Fields/1e7/basefield.mat'
-    B0rR, B0tR, B0pR, _, _, _ = load_basefield(basename,nr,ntheta,nphi)
-    if ( l_resym and minc !=1 ):
-        from parobpy.parob_lib import symmetrize
-        nphir = nphi*minc##+1 NOTE: last point is spurious in MagIC.symmetrize
-        phir = np.linspace(phi[0],3*phi[-1], nphir)
-        B0rR = symmetrize(B0rR,ms=minc)
-        B0tR = symmetrize(B0tR,ms=minc)
-        B0pR = symmetrize(B0pR,ms=minc)
+if ( l_resym and minc !=1 ):
+    from parobpy.parob_lib import symmetrize
+    nphir = nphi*minc##+1 NOTE: last point is spurious in MagIC.symmetrize
+    phir = np.linspace(phi[0],3*phi[-1], nphir)
+    B0rR = symmetrize(B0rR,ms=minc)#; j0r = symmetrize(j0r,ms=minc)
+    B0tR = symmetrize(B0tR,ms=minc)#; j0t = symmetrize(j0t,ms=minc)
+    B0pR = symmetrize(B0pR,ms=minc)#; j0p = symmetrize(j0p,ms=minc)
+amp_B = np.sqrt(amp_B) #-- sqrt(amp_b) because of parody unit in B_rms
+B0rR*=amp_B; B0tR*=amp_B; B0pR*=amp_B
 
 #-- Parameters
 nrtot=449
@@ -248,143 +276,7 @@ Jtbase = j0t[:48,:,:]
 Jpbase = j0p[:48,:,:]
 
 #------------------------------------------------------------------------------
-#%% Plot and save
-
-#-- Plot base for paper
-
-#-- Equat B0r minc
-eps = 1.e-3
-rr, pphi = np.meshgrid(radius, phi)
-xx = rr*np.cos(pphi)
-yy = rr*np.sin(pphi)
-#-- Adjusting colorsfor trajs #CB Barrois and Aubert 2024
-Atrajcolor=WA_BRoc_Dark#'#32CD32' # Lime # '#99CC32' # Jaune-Vert # '#FF7F00' # Orange
-Ftrajcolor= Personal_Cyan#'#FF7F00' # Orange # '#32CD32' # Lime # '#99CC32' # Jaune-Vert # 
-Strajcolor= 'blue'#FF7F00' # Orange # '#32CD32' # Lime # '#99CC32' # Jaune-Vert # 
-
-fieldplot = B0r[:,ntheta//2,:]
-#fig = plt.figure(figsize=(26, 3.6))
-fig = plt.figure(figsize=(11, 6.9))
-cmax = 1.25#abs(fieldplot).max()*0.95
-llevels=np.linspace(-cmax,cmax,64)
-clevels=np.linspace(-cmax,cmax,5)
-ax = plt.subplot(111)
-cf = ax.contourf(xx,yy,fieldplot[:nphi,:],levels=llevels,extend='both',cmap='PuOr_r')
-#cf = ax.pcolormesh(xx,yy,fieldplot[:nphi,:],vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap='PuOr_r')
-ax.plot(radius[0]*np.cos(phi), radius[0]*np.sin(phi), 'k-', lw=1.9)
-ax.plot(radius[-1]*np.cos(phi), radius[-1]*np.sin(phi), 'k-', lw=1.9)
-xa = radius[-1]*np.cos(phi[0])
-ya = radius[-1]*np.sin(phi[0])
-xb = radius[0]*np.cos(phi[0])
-x0 = np.linspace(xa, xb, 32)
-y0 = np.tan(phi[0])*(x0-xa)+ya
-ax.plot(x0, y0, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
-xc = radius[-1]*np.cos(phi[-1])
-yc = radius[-1]*np.sin(phi[-1])
-xd = radius[0]*np.cos(phi[-1])
-x1 = np.linspace(xc, xd, 32)
-y1 = np.tan(phi[-1])*(x1-xc)+yc
-ax.plot(x1, y1, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
-xe = radius[-1]*np.cos(phi[24])
-ye = radius[-1]*np.sin(phi[24])
-xf = radius[0]*np.cos(phi[24])
-x2 = np.linspace(xe, xf, 32)
-y2 = np.tan(phi[24])*(x2-xe)+ye
-ax.plot(x2, y2, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
-xg = radius[-1]*np.cos(phi[12])
-yg = radius[-1]*np.sin(phi[12])
-xh = radius[0]*np.cos(phi[12])
-x3 = np.linspace(xg, xh, 32)
-y3 = np.tan(phi[12])*(x3-xg)+yg
-#ax.plot(x3, y3, color=Strajcolor, ls='-', lw=2.6, alpha=0.8)
-xi = radius[-1]*np.cos(phi[36])
-yi = radius[-1]*np.sin(phi[36])
-xj = radius[0]*np.cos(phi[36])
-x4 = np.linspace(xi, xj, 32)
-y4 = np.tan(phi[36])*(x4-xi)+yi
-#ax.plot(x4, y4, color=Strajcolor, ls='-', lw=2.6)
-xk = radius[-1]*np.cos(phi[3])
-yk = radius[-1]*np.sin(phi[3])
-xl = radius[0]*np.cos(phi[3])
-x5 = np.linspace(xk, xl, 32)
-y5 = np.tan(phi[3])*(x5-xk)+yk
-#ax.plot(x5, y5, color=Atrajcolor, ls='-', lw=3.2)
-#ax.plot(x0, y0, 'k-', lw=1.5)
-#ax.plot(x1, y1, 'k-', lw=1.5)
-#-- To avoid lines eating borders
-if ( xx.min()<0 ):
-    ax.set_xlim(1.02*xx.min(), 1.02*xx.max())
-elif ( xx.min()==0 ):
-    ax.set_xlim(xx.min()-0.02, 1.02*xx.max())
-else:
-    ax.set_xlim(0.98*xx.min(), 1.02*xx.max())
-if ( yy.min()<0 ):
-    ax.set_ylim(1.02*yy.min(), 1.02*yy.max())
-elif ( yy.min()==0 ):
-    ax.set_ylim(yy.min()-0.02, 1.02*yy.max())
-else:
-    ax.set_ylim(0.98*yy.min(), 1.02*yy.max())
-ax.axis('off')
-cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.035, orientation='vertical', ticks=clevels, format=r'${x:.1f}$')
-cb.ax.tick_params(labelsize=32)
-transAx = mtransforms.ScaledTranslation(8.35+10/72, -45/72, fig.dpi_scale_trans)
-ax.text(0.0, 1.0, PLabels[3], transform=ax.transAxes + transAx,
-        fontsize=36, va='bottom', fontfamily='serif')
-plt.tight_layout()
-#if ( not l_save ):  plt.show()
-
-#-- Surf B0r de-minc
-phip = np.linspace(-np.pi, np.pi, nphir)
-thetap = np.linspace(np.pi/2, -np.pi/2, ntheta)
-pphi, ttheta = np.mgrid[-np.pi:np.pi:nphir*1j, np.pi/2.:-np.pi/2.:ntheta*1j]
-lon2 = pphi*180./np.pi
-lat2 = ttheta*180./np.pi
-
-circles = np.r_[-60., -30., 0., 30., 60.]
-delon = 60.
-meridians = np.arange(-180+delon, 180, delon)
-
-from vizuals import hammer2cart
-xx, yy = hammer2cart(ttheta, pphi)
-
-fieldplot = B0r[:,:,-2]
-#fig = plt.figure(figsize=(26, 3.6))
-fig = plt.figure(figsize=(13.5, 6.9))
-#cmax = 1.25#abs(fieldplot[n_t,:,:]).max()*0.92
-llevels=np.linspace(-cmax,cmax,64)
-clevels=np.linspace(-cmax,cmax,5)
-ax = plt.subplot(111)
-cf = ax.contourf(xx,yy,fieldplot,levels=llevels,extend='both',cmap='PuOr_r')#'seismic')#cmo.balance)#
-#cf = radialContour(fieldplot,rad=1,cm='PuOr_r')#levels=llevels,extend='both',cmap='seismic')#'PuOr_r')#cmo.balance)#
-for lat0 in circles:
-    x0, y0 = hammer2cart(lat0*np.pi/180., phip)
-    ax.plot(x0, y0, 'k:', lw=0.7)
-for lon0 in meridians:
-    x0, y0 = hammer2cart(thetap, lon0*np.pi/180.)
-    ax.plot(x0, y0, 'k:', lw=0.7)
-xout, yout = hammer2cart(thetap, -np.pi-eps)
-xin, yin = hammer2cart(thetap, np.pi+eps)
-ax.plot(xout, yout, 'k-')
-ax.plot(xin, yin, 'k-')
-ax.set_xlim(xx.min()*1.01, 1.01*xx.max())
-ax.set_ylim(yy.min()*1.01, 1.01*yy.max())
-ax.axis('off')
-cb = fig.colorbar(cf, ax=ax, orientation='vertical', fraction=0.05, pad=0.022, ticks=clevels, format=r'${x:.1f}$')#1e}')
-cb.ax.tick_params(labelsize=32)
-transAx = mtransforms.ScaledTranslation(10.61+10/72, -45/72, fig.dpi_scale_trans)
-ax.text(0.0, 1.0, PLabels[0], transform=ax.transAxes + transAx,
-        fontsize=36, va='bottom', fontfamily='serif')
-plt.tight_layout()
-#plt.show()
-if ( not l_save ):  plt.show()
-
-#-- Save B0 frames
-if ( l_save ):
-    plt.figure(1)
-    plt.savefig(savePlot+'Breq_deminc_VaLong.png')
-    plt.figure(2)
-    plt.savefig(savePlot+'Brsurf_SameCB.png')
-    plt.close('all')
+#%% Save Fields
 
 #-- Save using either a binary or a hd5f format (the latter is closer to what makebasefield.m produces)
 if ( l_save ):
@@ -409,5 +301,268 @@ if ( l_save ):
             f.create_dataset('Jpbase', data=j0p)
         
     #np.tofile(B0r)
+
+#------------------------------------------------------------------------------
+#%% Main Plot section
+
+#-- Poloidal
+xzon=r3D[0]*sint3D[0]# xzon=(r*sint')';
+brzon=B0rR.mean(axis=0)
+
+pol=np.zeros((ntheta,nr),)
+pol[0,:]=0.5*xzon[0,:]*brzon[0,:]*theta[0]
+for i in range(1,ntheta):
+    pol[i,:]=pol[i-1,:]-(xzon[i,:]*brzon[i,:] + xzon[i-1,:]*brzon[i-1,:])*(theta[i]-theta[i-1])
+#
+plerr=pol[-1,:]-0.5*(xzon[-1,:]*brzon[-1,:])*(np.pi-theta[-1])
+
+for i in range(ntheta):
+    pol[i,:]=pol[i,:]-plerr[:]*theta[i]/np.pi
+#
+
+plt.figure()
+plt.contour(s3D[0],r3D[0]*cost3D[0],pol[:,:])#,'k')
+plt.plot(radius[0]*sint,radius[0]*cost,'k')#plot(r(ng)*sint',r(ng)*cost','k')
+plt.plot(radius[-1]*sint,radius[-1]*cost,'k')#plot(r(nr)*sint',r(nr)*cost','k')
+plt.show()
+
+#-- Plot base field if needed
+if ( l_check_all ):
+    from vizuals import merContour, radialContour
+    n_levels=31
+    #-- Main field
+    #merContour(B0r.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    #merContour(B0t.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    #merContour(B0p.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    radialContour(B0r[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour(B0t[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour(B0p[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    #-- Compared to basefield.mat
+    radialContour(B0rR[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour(B0tR[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour(B0pR[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour((B0rR - B0r)[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour((B0tR - B0t)[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    radialContour((B0pR - B0p)[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    #-- Curl
+    #merContour(j0r.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    #merContour(j0t.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    #merContour(j0p.mean(axis=0), radius, levels=n_levels, cm='PuOr_r')
+    #radialContour(j0r[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    #radialContour(j0t[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    #radialContour(j0p[:,:,0], rad=0, levels=n_levels, cm='PuOr_r')
+    plt.show()
+
+#
+#------------------------------------------------------------------------------
+#%% Paper plot section
+
+#-- Plot base for paper
+#-- Equat B0r minc
+eps = 1.e-3
+ph = np.linspace(0, 2*np.pi, nphir)
+#ph = phi.copy() #NOTE: phi in Parody does not exactly go up to 0 and 2*np.pi
+rr, pphi = np.meshgrid(radius, ph)
+xx = rr*np.cos(pphi)
+yy = rr*np.sin(pphi)
+#-- Adjusting colorsfor trajs #CB Barrois and Aubert 2024
+if ( not l_plot_path ):
+    Atrajcolor=WA_BRoc_Dark#'#32CD32' # Lime # '#99CC32' # Jaune-Vert # '#FF7F00' # Orange
+    Ftrajcolor= Personal_Cyan#'#FF7F00' # Orange # '#32CD32' # Lime # '#99CC32' # Jaune-Vert # 
+    Strajcolor= 'blue'#FF7F00' # Orange # '#32CD32' # Lime # '#99CC32' # Jaune-Vert # 
+    bredim = 1.0
+else:
+    coast=np.loadtxt('/Users/obarrois/Desktop/Base_Fields/coast_line.dat')
+    bredim =  0.7 #Elsasser unit for redimensionalisation
+
+fieldplot = B0r[:,ntheta//2,:]*bredim
+#fig = plt.figure(figsize=(26, 3.6))
+if ( not l_plot_path ):
+    fig = plt.figure(figsize=(11, 6.9))
+else:
+    fig = plt.figure(figsize=(8.5, 6.9))
+cmax = 2.1*bredim#1.25#abs(fieldplot).max()*0.95
+llevels=np.linspace(-cmax,cmax,64)
+clevels=np.linspace(-cmax,cmax,5)
+ax = plt.subplot(111)
+#cf = ax.contourf(xx,yy,fieldplot[:nphi,:],levels=llevels,extend='both',cmap='PuOr_r')
+cf = ax.pcolormesh(xx,yy,fieldplot[:nphi,:],vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap='PuOr_r')
+ax.plot(radius[0]*np.cos(ph), radius[0]*np.sin(ph), 'k-', lw=1.9)
+ax.plot(radius[-1]*np.cos(ph), radius[-1]*np.sin(ph), 'k-', lw=1.9)
+if ( not l_plot_path ):
+    xa = radius[-1]*np.cos(ph[0])
+    ya = radius[-1]*np.sin(ph[0])
+    xb = radius[0]*np.cos(ph[0])
+    x0 = np.linspace(xa, xb, 32)
+    y0 = np.tan(ph[0])*(x0-xa)+ya
+    ax.plot(x0, y0, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
+    xc = radius[-1]*np.cos(ph[-1])
+    yc = radius[-1]*np.sin(ph[-1])
+    xd = radius[0]*np.cos(ph[-1])
+    x1 = np.linspace(xc, xd, 32)
+    y1 = np.tan(ph[-1])*(x1-xc)+yc
+    ax.plot(x1, y1, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
+    xe = radius[-1]*np.cos(ph[24])
+    ye = radius[-1]*np.sin(ph[24])
+    xf = radius[0]*np.cos(ph[24])
+    x2 = np.linspace(xe, xf, 32)
+    y2 = np.tan(ph[24])*(x2-xe)+ye
+    ax.plot(x2, y2, color=Ftrajcolor, ls='-', lw=6.4)#, alpha=0.8)
+    xg = radius[-1]*np.cos(ph[12])
+    yg = radius[-1]*np.sin(ph[12])
+    xh = radius[0]*np.cos(ph[12])
+    x3 = np.linspace(xg, xh, 32)
+    y3 = np.tan(ph[12])*(x3-xg)+yg
+    #ax.plot(x3, y3, color=Strajcolor, ls='-', lw=2.6, alpha=0.8)
+    xi = radius[-1]*np.cos(ph[36])
+    yi = radius[-1]*np.sin(ph[36])
+    xj = radius[0]*np.cos(ph[36])
+    x4 = np.linspace(xi, xj, 32)
+    y4 = np.tan(ph[36])*(x4-xi)+yi
+    #ax.plot(x4, y4, color=Strajcolor, ls='-', lw=2.6)
+    xk = radius[-1]*np.cos(ph[3])
+    yk = radius[-1]*np.sin(ph[3])
+    xl = radius[0]*np.cos(ph[3])
+    x5 = np.linspace(xk, xl, 32)
+    y5 = np.tan(ph[3])*(x5-xk)+yk
+    #ax.plot(x5, y5, color=Atrajcolor, ls='-', lw=3.2)
+    #ax.plot(x0, y0, 'k-', lw=1.5)
+    #ax.plot(x1, y1, 'k-', lw=1.5)
+#-- To avoid lines eating borders
+if ( xx.min()<0 ):
+    ax.set_xlim(1.02*xx.min(), 1.02*xx.max())
+elif ( xx.min()==0 ):
+    ax.set_xlim(xx.min()-0.02, 1.02*xx.max())
+else:
+    ax.set_xlim(0.98*xx.min(), 1.02*xx.max())
+if ( yy.min()<0 ):
+    ax.set_ylim(1.02*yy.min(), 1.02*yy.max())
+elif ( yy.min()==0 ):
+    ax.set_ylim(yy.min()-0.02, 1.02*yy.max())
+else:
+    ax.set_ylim(0.98*yy.min(), 1.02*yy.max())
+ax.axis('off')
+cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.035, orientation='vertical', ticks=clevels, format=r'${x:.1f}$')
+if ( l_plot_path ): cb.set_label(label=r'($mT$)',size=36)#r'($a.u.$)',size=36)#, weight='bold') #NOTE: Add 0.5 in horizontal length to the figure when using a colorbar legend
+cb.ax.tick_params(labelsize=32)
+if ( not l_plot_path ):
+    transAx = mtransforms.ScaledTranslation(8.35+10/72, -45/72, fig.dpi_scale_trans)
+else:
+    transAx = mtransforms.ScaledTranslation(5.35+10/72, -45/72, fig.dpi_scale_trans)
+ax.text(0.0, 1.0, PLabels[3], transform=ax.transAxes + transAx,
+        fontsize=36, va='bottom', fontfamily='serif')
+plt.tight_layout()
+#if ( not l_save ):  plt.show()
+
+#-- phi-Avg B0p
+if ( l_plot_path ):
+    eps = 1.e-4
+    th = np.linspace(0, np.pi, ntheta)
+    #th = theta.copy() #NOTE: theta in Parody does not go up to 0 and np.pi
+    rr, tth = np.meshgrid(radius, th)
+    xx = rr * np.sin(tth)
+    yy = rr * np.cos(tth)
+    #
+    fieldplot = B0p.mean(axis=0)*bredim
+    #fig = plt.figure(figsize=(26, 3.6))
+    fig = plt.figure(figsize=(5.5, 6.9))
+    #cmax = 1.8#1.25#abs(fieldplot).max()*0.95
+    llevels=np.linspace(-cmax,cmax,64)
+    clevels=np.linspace(-cmax,cmax,5)
+    ax = plt.subplot(111)
+    #cf = ax.contourf(xx,yy,fieldplot[:,:],levels=llevels,extend='both',cmap='PuOr_r')
+    cf = ax.pcolormesh(xx,yy,fieldplot[:,:],vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap='PuOr_r')
+    ax.plot((radius[-1])*np.sin(th), (radius[-1])*np.cos(th), 'k-')
+    ax.plot((radius[0])*np.sin(th), (radius[0])*np.cos(th), 'k-')
+    ax.plot([0., 0.], [radius[0], radius[-1]], 'k-')
+    ax.plot([0., 0.], [-radius[0], -radius[-1]], 'k-')
+    #-- To avoid lines eating borders
+    if xx.min() < -eps:
+        ax.set_xlim(1.01*xx.min(), 1.01*xx.max())
+    elif abs(xx.min()) < eps:
+        ax.set_xlim(xx.min()-0.01, 1.01*xx.max())
+    else:
+        ax.set_xlim(0.99*xx.min(), 1.01*xx.max())
+    if yy.min() < -eps:
+        ax.set_ylim(1.01*yy.min(), 1.01*yy.max())
+    elif abs(yy.min()) < eps:
+        ax.set_ylim(yy.min()-0.01, 1.01*yy.max())
+    else:
+        ax.set_ylim(0.99*yy.min(), 1.01*yy.max())
+    ax.axis('off')
+    cb = fig.colorbar(cf, ax=ax, fraction=0.08, pad=0.035, orientation='vertical', ticks=clevels, format=r'${x:.1f}$')
+    cb.set_label(label=r'($mT$)',size=36)#r'($a.u.$)',size=36)#, weight='bold')
+    cb.ax.tick_params(labelsize=32)
+    transAx = mtransforms.ScaledTranslation(15/72, -240/72, fig.dpi_scale_trans)
+    ax.text(0.0, 1.0, PLabels[2], transform=ax.transAxes + transAx,
+            fontsize=36, va='bottom', fontfamily='serif')
+    plt.tight_layout()
+    #if ( not l_save ):  plt.show()
+
+#-- Surf B0r de-minc
+phip = np.linspace(-np.pi, np.pi, nphir)
+thetap = np.linspace(np.pi/2, -np.pi/2, ntheta)
+pphi, ttheta = np.mgrid[-np.pi:np.pi:nphir*1j, np.pi/2.:-np.pi/2.:ntheta*1j]
+lon2 = pphi*180./np.pi
+lat2 = ttheta*180./np.pi
+
+circles = np.r_[-60., -30., 0., 30., 60.]
+delon = 60.
+meridians = np.arange(-180+delon, 180, delon)
+
+from vizuals import hammer2cart
+xx, yy = hammer2cart(ttheta, pphi)
+
+fieldplot = B0r[:,:,-2]*bredim
+#fig = plt.figure(figsize=(26, 3.6))
+fig = plt.figure(figsize=(14, 6.9))
+#cmax = 1.25#abs(fieldplot[n_t,:,:]).max()*0.92
+llevels=np.linspace(-cmax,cmax,64)
+clevels=np.linspace(-cmax,cmax,5)
+ax = plt.subplot(111)
+#cf = ax.contourf(xx,yy,fieldplot,levels=llevels,extend='both',cmap='PuOr_r')#'seismic')#cmo.balance)#
+cf = ax.pcolormesh(xx,yy,fieldplot,vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap='PuOr_r')
+#cf = radialContour(fieldplot,rad=1,cm='PuOr_r')#levels=llevels,extend='both',cmap='seismic')#'PuOr_r')#cmo.balance)#
+for lat0 in circles:
+    x0, y0 = hammer2cart(lat0*np.pi/180., phip)
+    ax.plot(x0, y0, 'k:', lw=0.7)
+for lon0 in meridians:
+    x0, y0 = hammer2cart(thetap, lon0*np.pi/180.)
+    ax.plot(x0, y0, 'k:', lw=0.7)
+xout, yout = hammer2cart(thetap, -np.pi-eps)
+xin, yin = hammer2cart(thetap, np.pi+eps)
+ax.plot(xout, yout, 'k-')
+ax.plot(xin, yin, 'k-')
+ax.set_xlim(xx.min()*1.01, 1.01*xx.max())
+ax.set_ylim(yy.min()*1.01, 1.01*yy.max())
+xcoast, ycoast = hammer2cart(coast[:,1]*np.pi/180, coast[:,0]*np.pi/180)
+ax.plot(xcoast,ycoast,color='k',linewidth=0.5)
+ax.axis('off')
+cb = fig.colorbar(cf, ax=ax, orientation='vertical', fraction=0.05, pad=0.022, ticks=clevels, format=r'${x:.1f}$')#1e}')
+if ( l_plot_path ): cb.set_label(label=r'($mT$)',size=36)#r'($a.u.$)',size=36)#, weight='bold')
+cb.ax.tick_params(labelsize=32)
+transAx = mtransforms.ScaledTranslation(10.61+10/72, -45/72, fig.dpi_scale_trans)
+ax.text(0.0, 1.0, PLabels[0], transform=ax.transAxes + transAx,
+        fontsize=36, va='bottom', fontfamily='serif')
+plt.tight_layout()
+#plt.show()
+if ( not l_save ):  plt.show()
+
+#-- Save B0 frames
+if ( l_save ):
+    if ( not l_plot_path ):
+        plt.figure(1)
+        plt.savefig(savePlot+'Breq_deminc_VaLong.png')
+        plt.figure(2)
+        plt.savefig(savePlot+'Brsurf_SameCB.png')
+        plt.close('all')
+    else:
+        plt.figure(1)
+        plt.savefig(savePlot+'Br-eq_path.pdf')
+        plt.figure(2)
+        plt.savefig(savePlot+'Bp-phi-Avg_path.pdf')
+        plt.figure(3)
+        plt.savefig(savePlot+'Br-CMB_path.pdf')
+        plt.close('all')
 
 #-- End Script

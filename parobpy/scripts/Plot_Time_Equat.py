@@ -29,9 +29,22 @@ import cmocean.cm as cmo
 
 #-- Lehnert number, \lambda = B/{sqrt(rho mu) * Omega*d}.
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e7', 'Pm0o25', 1.46e-3, 1.0, 'b3', '0.000280800' # 3e-7 S=1214.1
-run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'b4', '0.000040320' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'b4', '0.000040320' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1', 1.1e-3, 1.0, 'bbi1e7', '0.000001600' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1BIS', 1.1e-3, 1.0, 'bbi1e7B', '0.000020800' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_per', 1.1e-3, 1.0, 'bbi1e7p', '0.000147200' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin70000pb', 1.48e-3, 1.0, 'bbi1e7ps70000pb', '0.000183040' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin4096pb/ElssTwice', 1.57e-3, 1.0, 'bbi1e7ps4096pbhE', '0.000183040' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin4096pb/ElssHalf', 7.84e-4, 1.0, 'bbi1e7ps4096pblE', '0.000409600' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin10000pb/ElssTrue', 1.1e-3, 0.565, 'bbi1e7ps10000pbtE', '0.000410880' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_PathBase/perSin4096pb/IY66', 1.57e-3, 1.0, 'bbi1e7ps4096pbiY66', '0.000183040' # 1e-7
+run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin10000/ElssTwice', 1.57e-3, 1.0, 'bbi1e7ps10000hE', '0.000614400' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin70000/ElssHalf', 7.84e-4, 1.0, 'bbi1e7ps70000lE', '0.000612800' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin160000/BY66-IY66', 1.1e-3, 1.0, 'bbi1e7ps160000bfY66i', '0.000586000' # 1e-7
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'Pm1o44e-1_SimpBase/perSin20000/IY66', 1.1e-3, 1.0, 'bbi1e7ps20000iY66', '0.000628800' # 1e-7
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e7', 'PathBase', 1.1e-3, 1.0, 'b4-p', '0.000008755' # 1e-7
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', '', 5.4e-4, 1.0, 'b4o5', '0.000024896' # 1e-8
+#run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '1e8', 'Pm0o46e-1', 6.2e-4, 1.0, 'bbi1e8', '0.000015040' # 1e-8
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '6e9', 'Pm0o36e-1', 5.53e-4, 1.0, 'b4o63', '0.000015560' # 6.3e-9
 #run_Ek, run_Pm, Lehnert, amp_B, run_ID, timestamp = '3e10', '', 2.6e-4, 1.0, 'b5', '0.000001456' # 3e-10
 
@@ -66,15 +79,20 @@ filename = directory + Gt_file
             nr, ntheta, nphi, azsym, radius, theta, phi, _, _, _,
             _, _, _, _) = parodyload(filename)
 
-if ( run_Pm == 'PathBase' ):
+if ( run_Pm == 'PathBase' or run_Pm == 'Pm1o44e-1_PathBase/perSin4096pb/IY66' ):
     basedir = '/Users/obarrois/Desktop/stella/Work/' # basefield copied on stella
     basename = basedir+'basefield_path.mat' # if you use python directly from cluster
 else:
     basedir = '/Users/obarrois/Desktop/stella/Work/Waves'+run_Ek+'/' # basefield copied on stella
-    basename = basedir+'basefield.mat' # if you use python directly from cluster
+    #basename = basedir+'basefield.mat' # if you use python directly from cluster
+    basename = basedir+'basefieldY66.mat' # if you use python directly from cluster
 B0r, B0t, B0p, _, _, _ = load_basefield(basename,nr,ntheta,nphi)
 
 NR, Ek, Ra, Pr, Pm, minc, mcl, fi, rf = load_dimensionless(run_ID, directory)
+Elsasser = 1.33 #-- Computed from Bessel B0_tot field #NOTE: Actually Brms from bessel --> must be squared to calculate Lehnert: Elsasser = Brms**2 = 1.33**2
+#Elsasser = Elsasser*np.sqrt(0.5) #-- if changing parameters #/(4./3.)
+#Lehnert = np.sqrt(Elsasser**2*Ek/Pm)
+#Lundquist = np.sqrt(Elsasser**2*Pm/Ek)
 
 phir = phi.copy()
 nphir = nphi
@@ -103,17 +121,18 @@ upft = np.zeros_like(brt)
 
 #-- Selecting data for plotting if needed
 nplots = 6
-tpk = int(len(timett[:500])/nplots)
-#t_pick = np.arange(1,len(timett[:500]),tpk)
+tpk = int(len(timett[:n_samples])/nplots)
+#t_pick = np.arange(1,len(timett[:n_samples]),tpk)
 nplots = 4
 t_pick = np.array([99, 199, 299, 399, 499])
+#t_pick = np.array([2, 53, 94, 125, 156])
 
 n_t=-1; n_s=-1
 #-- Start loop
-for file in np.array(Gt_file_l)[t_pick]:
-#for file in Gt_file_l[tstart::t_srate]:#[249:250]:#
-    #n_s+=1
-    n_t+=1; n_s = t_pick[n_t]
+#for file in np.array(Gt_file_l)[t_pick]:
+for file in Gt_file_l[tstart::t_srate]:#[249:250]:#
+    n_s+=1
+    #n_t+=1; n_s = t_pick[n_t]
     #------------------------------------------------------------------------------
     #-- loading pointtime data
     print('Loading {} (({}/{})/{})'.format(file, n_s+1, n_samples, len(Gt_file_l)))
@@ -217,16 +236,16 @@ Strajcolor= 'blue'#FF7F00' # Orange # '#32CD32' # Lime # '#99CC32' # Jaune-Vert 
 
 #-- Field to plot
 if ( l_plot_fluct ):
-    fieldplot = upft.copy()#upt.copy()#bft.copy()#
-    cmax = 4.#upft# 12.#upt# 
+    fieldplot = upft.copy()#brt.copy()#upt.copy()#
+    cmax = 8.0e0#2.0e-3#2.#4.#upft# 12.#upt# 
     plab = PLabels[2]
 else:
     fieldplot = upt.copy()#
-    cmax = 12.#upt#
+    cmax = 12.#6.#12.#upt#
     plab = PLabels[1]
 
 #-- Fig. Barrois and Aubert 2024
-plt.rcParams['text.usetex'] = True
+#plt.rcParams['text.usetex'] = True
 #-- Aggregated equatContour plot phi-vs-s at different times
 k=-1
 #fig = plt.figure(figsize=(26, 3.6))#figsize=(25.2, 5.1))
@@ -242,9 +261,9 @@ for n_t in t_pick:
     #ax = axs[k]
     if ( not l_rnorm ):
         if ( l_deminc and l_resym ):
-            cf = ax.contourf(xx,yy,fieldplot[n_t,:,:],levels=llevels,extend='both',cmap='seismic')#'PuOr_r')#cmo.balance)#
+            cf = ax.contourf(xx,yy,fieldplot[n_t,:,:],levels=llevels,extend='both',cmap=cmo.balance)#'PuOr_r')#'seismic')#
         else:
-            cf = ax.contourf(xx,yy,fieldplot[n_t,:nphi,:],levels=llevels,extend='both',cmap='seismic')#'PuOr_r')#cmo.balance)#
+            cf = ax.contourf(xx,yy,fieldplot[n_t,:nphi,:],levels=llevels,extend='both',cmap=cmo.balance)#'PuOr_r')#'seismic')#
             #cf = ax.pcolormesh(xx,yy,fieldplot[n_t,:nphi,:],vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap='seismic')#'PuOr_r')#cmo.balance)#
     else:
         if ( l_deminc and l_resym ):
@@ -299,9 +318,13 @@ for n_t in t_pick:
         transAx = mtransforms.ScaledTranslation(+10/72, -5/72, fig.dpi_scale_trans)
         ax.text(0.0, 1.0, plab, transform=ax.transAxes + transAx,
                 fontsize=36, va='bottom', fontfamily='serif')
+#fig.add_axes([1.85, 1.15, 1.05, 1.7])
 #
 plt.tight_layout()
+#cb = fig.colorbar(cf, ax=axs[:], fraction=0.02, pad=0.015, orientation='horizontal', ticks=clevels, format=r'${x:.0f}$')
+#cb.ax.tick_params(labelsize=32)
 if ( not l_save ):  plt.show()
+plt.show()
 
 #-- Save True Fields analysis
 if ( l_save ):
@@ -312,21 +335,25 @@ if ( l_save ):
     plt.close('all')
 
 
+#
 #-- Fig. Answer to Referee: Barrois and Aubert 2024
 #-- Aggregated plot Time-vs-Azimuth at different radii. NOTE: Need to read and store all equatorial frames.
 eps = 1.e-3
+tpk = 4
+ltd = int(len(tdimt)/4)
+t_axis = np.round(np.linspace(tdimt[ltd],tdimt[-1],tpk),2)
 
-l_plot_fluct = 1
+l_plot_fluct = 2
 #-- Field to plot
 if ( l_plot_fluct == 1 ):
     fieldplot = upft.copy()#upt.copy()#brt.copy()#
     cmax = 8.0e0#1.0e-4#2.#4.#upft# 12.#upt# 
-    cmapplot = plt.cm.seismic#plt.cm.PuOr_r#cmo.balance#
+    cmapplot = cmo.balance#plt.cm.seismic#plt.cm.PuOr_r#
     plab = PLabels[2]
     ncl = 5
 elif ( l_plot_fluct == 2 ):
     fieldplot = brt.copy()#
-    cmax = 1.0e-4#8.0e-5#
+    cmax = 5.0e-4#8.0e-5#
     cmapplot = plt.cm.PuOr_r#
     plab = PLabels[3]
     ncl = 3
@@ -338,9 +365,9 @@ else:
     ncl = 5
 
 nplots = 4
-t_pick = np.array([3, 100, 200, 300, 397])#np.array([3, 243, 486, 729, 972])#
-xlevels=(0.5, 1.0, 1.5, 2.0)#(0.0, 0.7, 1.4, 2.1)#
-ylevels=(0.4, 0.8, 1.2, 1.6)
+t_pick = np.array([3, 100, 200, 300, 397])#np.array([390, 392, 394, 396, 398])#np.array([3, 243, 486, 729, 972])#
+xlevels=(1.5, 3.0, 4.5, 6.0)#(0.5, 1.0, 1.5, 2.0)#(0.0, 0.7, 1.4, 2.1)#
+ylevels=t_axis#(0.8, 1.6, 2.4, 3.2)#(0.4, 0.8, 1.2, 1.6)
 #
 k=-1
 fig = plt.figure(figsize=(21, 7.4))
@@ -373,5 +400,5 @@ if ( l_save and rank==0 ):
     plt.figure(1)
     plt.savefig(savePlot+'ATime-Azimuthal-Diagram_field-Col.png')
     plt.close('all')
-            
+
 #-- End Script

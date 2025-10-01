@@ -246,7 +246,7 @@ k=-1
 fig = plt.figure(figsize=(25.55, 3.85)) #NOTE: cannot unpack non-iterable Figure object
 #fig, axs = plt.subplots(1, nplots+1, figsize=(21, 7.4))#figsize=(22.1, 7.4))#, sharex=True)#, layout='constrained')
 for n_t in t_pick:
-    cmax = 6.0e0#4.e-4#4.e-5#2.e-4#abs(fieldplot[n_t,:,:]).max()*0.92
+    cmax = 4.0e0#4.e-4#4.e-5#2.e-4#abs(fieldplot[n_t,:,:]).max()*0.92
     llevels=np.linspace(-cmax,cmax,64)
     clevels=np.linspace(-cmax,cmax,4)
     k+=1
@@ -268,7 +268,7 @@ for n_t in t_pick:
     ax.axis('off')
     plt.gca().xaxis.set_tick_params(labelsize=32)
     plt.gca().yaxis.set_tick_params(labelsize=32)
-    #plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
+    #plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# #NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
     plt.title(r'time $t = {:.2f}$'.format(tdimt[n_t]), fontsize=32)
     cb = fig.colorbar(cf, ax=ax, fraction=0.08, pad=0.085, orientation='horizontal', ticks=clevels, format=r'${x:.0e}$')#1f}')
     cb.ax.tick_params(labelsize=21)#30)#
@@ -287,7 +287,6 @@ plt.show()
 if ( l_save ):
     plt.savefig(savePlot+'Azimuth-Theta-SurfContour_br.png')
     plt.close('all')
-
 
 #
 #------------------------------------------------------------------------------
@@ -363,7 +362,7 @@ ax.plot(xcoast,ycoast,color='k',linewidth=0.5)
 ax.axis('off')
 plt.gca().xaxis.set_tick_params(labelsize=32)
 plt.gca().yaxis.set_tick_params(labelsize=32)
-#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
+#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# #NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
 plt.title(r'time $t = {:.2f}$'.format(tdimt[n_t]), fontsize=32)
 if ( l_plot_fluct == 2 ):
     cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.05, orientation='horizontal', ticks=clevels, format=r'${x:.0e}$')
@@ -413,10 +412,10 @@ ax.plot(xcoast,ycoast,color='k',linewidth=0.5)
 ax.axis('off')
 plt.gca().xaxis.set_tick_params(labelsize=32)
 plt.gca().yaxis.set_tick_params(labelsize=32)
-#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
+#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# #NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
 plt.title(r'time $t = {:.2f}\,y$'.format(tdimt[n_t]), fontsize=32)
 cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.05, orientation='horizontal', ticks=clevels, format=r'${x:.1f}$')
-cb.set_label(label=r'($a.u.$)',size=32)#NOTE: Add 0.5 in horizontal length to the figure when using a colorbar legend
+cb.set_label(label=r'($a.u.$)',size=32)# #NOTE: Add 0.5 in horizontal length to the figure when using a colorbar legend
 cb.ax.tick_params(labelsize=32)#24)#
 transAx = mtransforms.ScaledTranslation(+75/72, -15/72, fig.dpi_scale_trans)
 ax.text(0.0, 1.0, PLabels[1], transform=ax.transAxes + transAx,
@@ -445,7 +444,7 @@ ax.plot(xin, yin, 'k-')
 ax.axis('off')
 plt.gca().xaxis.set_tick_params(labelsize=32)
 plt.gca().yaxis.set_tick_params(labelsize=32)
-#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
+#plt.title(r'time $t = $'+str(np.round(tdimt[n_t],2)), fontsize=32)# #NOTE: Really better to use "format", e.g.: $print('{:1.2f}'.format(123.456))
 plt.title(r'time $t = {:.2f}\,y$'.format(tdimt[n_t]), fontsize=32)
 cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.05, orientation='horizontal', ticks=clevels, format=r'${x:.0e}$')
 cb.set_label(label=r'($a.u.$)',size=32)#r'($mT$)',size=32)#
@@ -465,7 +464,7 @@ if ( l_save ):
 
 #
 #-- Fig.2c-d Barrois and Aubert 2025
-#-- Plot Time-vs-Azimuth at CMB and at the Equator. NOTE: Need to read and store all surface frames.
+#-- Plot Time-vs-Azimuth at CMB and at the Equator. #NOTE: Need to read and store all surface frames.
 tpk = 6
 ltd = int(len(tdimt)/(tpk+1))
 y_lim = 7.*tauA# 7.07# tdimt[-1]# 
@@ -510,7 +509,7 @@ ax = plt.subplot(111)
 #cf = ax.contourf(phi,tdimt,fieldplot[:,:nphir,ntheta//2],levels=llevels,extend='both',cmap=cmapplot)#
 cf = ax.pcolormesh(phir,tdimt[n_tstart:],fieldplot[n_tstart:,:nphir,ntheta//2],vmin=-cmax,vmax=cmax,antialiased=True,shading='gouraud',rasterized=True,cmap=cmapplot)#
 if ( l_phy_dim ):
-    plt.xlabel(r'Azimuth, ($^\circ\,$E)', fontsize=36)
+    plt.xlabel(r'Longitude, ($^\circ\,$E)', fontsize=36)
     plt.ylabel(r'Time, ($y$)', fontsize=36)
 else:
     plt.xlabel(r'Azimuth, $\phi$', fontsize=36)
@@ -540,7 +539,7 @@ plt.tight_layout()
 #-- Save True Fields analysis
 if ( l_save ):
     plt.figure(1)
-    plt.savefig(savePlot+'Azimuthal-Time_Equat-CMB_'+pttl+'.pdf')
+    plt.savefig(savePlot+'Azimuthal-Time_Equat-CMB_'+pttl+'.pdf')#
     plt.close('all')
 
 #-- End Script

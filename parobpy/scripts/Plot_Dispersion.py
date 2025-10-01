@@ -79,24 +79,63 @@ dataS = np.loadtxt('/Users/obarrois/Desktop/Show/2025_Barrois_Aubert_Waves-QGA-P
 #------------------------------------------------------------------------------
 #%% Paper plot section
 
+from matplotlib.ticker import LogFormatter, AutoMinorLocator, FormatStrFormatter
 #
 # plt.rcParams['text.usetex'] = True
 plt.rcParams['text.usetex'] = True
 plt.rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
 
+#-- Theoretical dispersion relations ([Barrois and Aubert, 2025] from [Gillet et al., 2021])
+l_theory = True # physically redimensionning quantities?
+#-- Constants
+ks0 = 44.8#45#
+vath = 2.e-1#1.90e-1#
+Lehnert = 1.48e-3
+mth=3; hth = 0.34; Omegath = 1./Lehnert#1.e3#
+#mth=6; hth = 1.; Omegath =1.e4#
+ks0th = (mth*Omegath/(vath*hth**2))**(1/3.)
+vathth = mth*Omegath/(ks0**3*hth**2)
+#-- Full relation: Eq.2 [Barrois and Aubert, 2025]
+ksth = np.linspace(1,401,201)
+oksth= ks0/ksth#ks0th/ksth#
+omthp = vath*ksth*(oksth**3 + np.sqrt(1 + oksth**6))
+omthm = vath*ksth*(oksth**3 - np.sqrt(1 + oksth**6))
+
+#-- Aflvén relation: Eq.5
+omthAp = vath*ksth + mth*Omegath/(ksth*hth)**2
+omthAm =-vath*ksth + mth*Omegath/(ksth*hth)**2
+#-- Rossby relation: Eq.6
+omthR = 2*mth*Omegath/(ksth*hth)**2
+#-- QG-MC relation: Eq.7
+omthMC =-(vath*hth)**2*ksth**4/(2*mth*Omegath)
+
 #
-#-- Fig.6 Barrois and Aubert 2025
+#-- Fig.8 Barrois and Aubert 2025
 #-- Plot Omega-vs-ks with or without units
 #
 fig = plt.figure(figsize=(21, 12.1))
 ax = plt.subplot(111)
 if ( l_phydim ):
-    ax.loglog(np.linspace(60,400,50)/d2pi, 2e-1*np.linspace(60,400,50)/tauA2pi, ls=':', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^1$')
-    ax.loglog(llin/d2pi, law2/tauA2pi, ls='-.', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^2$')
-    ax.loglog(np.linspace(10,50,50)/d2pi, 1e-6*np.linspace(10,50,50)**4/tauA2pi, ls='--', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^4$')
+    if ( l_theory ):
+        ax.loglog(ksth/d2pi, abs(omthm)/tauA2pi, ls='-', color='k', lw=2.1, alpha=0.9, label=r'$\vert \omega_\mathrm{theoretical}^- \vert$ (Eq.2)')
+        ax.loglog(ksth/d2pi, omthp/tauA2pi, ls='-.', color='k', lw=2.1, alpha=0.9, label=r'$\omega_\mathrm{theoretical}^+$')#  (Eq.2)')#
+        #ax.loglog(ksth/d2pi, omthp/tauA2pi, ls='-', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$\omega_\mathrm{theoretical}^+$')#  (Eq.2)')#
+        #ax.loglog(ksth[22:]/d2pi, abs(omthAm[22:])/tauA2pi, ls=':', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$\vert \omega_\mathrm{\cal A}^- \vert \rightarrow k_s^1$ (Eq.5)')
+        ax.loglog(ksth[41:]/d2pi, abs(omthAm[41:])/tauA2pi-0.08, ls=':', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$\vert \omega_\mathrm{\cal A}^- \vert \propto k_s^1$ (Eq.5)')
+        #ax.loglog(ksth[22:]/d2pi, omthAp[22:]/tauA2pi, ls=':', color='#1e1e1e', lw=1.9, alpha=0.2, label=r'$\omega_\mathrm{\cal A}^+ \sim k_s^1$')# (Eq.5)')#
+        ax.loglog(ksth[:31]/d2pi, omthR[:31]/tauA2pi, ls='-.', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$\omega_\mathrm{R} \propto k_s^{-2}$ (Eq.6)')
+        ax.loglog(ksth[:31]/d2pi, abs(omthMC[:31])/tauA2pi, ls='--', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$\vert \omega_\mathrm{MC} \vert \propto k_s^4$ (Eq.7)')
+    else:
+        #-- Revision 1:
+        #ax.loglog(np.linspace(60,400,50)/d2pi, 2e-1*np.linspace(60,400,50)/tauA2pi, ls=':', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^1$')
+        #ax.loglog(llin/d2pi, law2/tauA2pi, ls='-.', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^2$')
+        #ax.loglog(np.linspace(10,50,50)/d2pi, 1e-6*np.linspace(10,50,50)**4/tauA2pi, ls='--', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^4$')
+        #-- Revision 2 (non-teoretical scaling ks^2 confusing):
+        ax.loglog(np.linspace(50,400,50)/d2pi, 2e-1*np.linspace(50,400,50)/tauA2pi, ls=':', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^1$')
+        ax.loglog(np.linspace(10,60,50)/d2pi, 1e-6*np.linspace(10,60,50)**4/tauA2pi, ls='--', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^4$')
     #
     ax.loglog(ks/d2pi, wt/tauA2pi, 'b-o', lw=3.1, ms=13, alpha=0.9, label=r'S Cases')#r'Simple $B_0$')
-    ax.loglog(ks[4]/d2pi, wt[4]/tauA2pi, color='b', marker='s', mfc='None', ms=16.2, ls='', alpha=0.9, label=r'SB-1 Case')#
+    ax.loglog(ks[4]/d2pi, wt[4]/tauA2pi, color='b', marker='o', mfc='None', ms=16.2, ls='', alpha=0.9, label=r'SB-1 Case')#
     #ax.loglog(kshe/d2pi, wthe/tauA2pi, 'k->', lw=3.1, ms=13, alpha=0.8, label=r'stronger $B_0$ S Cases')#r'Simple stronger $B_0$')
     #ax.loglog(ksle/d2pi, wtle/tauA2pi, 'c-<', lw=3.1, ms=13, alpha=0.7, label=r'weaker $B_0$ S Cases')#r'Simple weaker $B_0$')
     ax.loglog(kspb/d2pi, wtpb/tauA2pi/1.34545, 'r-*', lw=3.1, ms=13, label=r'C Cases')#r'Complex $B_0$')
@@ -108,33 +147,47 @@ else:
     ax.loglog(np.linspace(10,50,50), 1e-6*np.linspace(10,50,50)**4/n2pi/le, ls='--', color='#1e1e1e', lw=1.9, alpha=0.5, label=r'$k_s^4$')
     #
     ax.loglog(ks, wt/n2pi/le, 'b-o', lw=3.1, ms=13, alpha=0.9, label=r'S Cases')#r'Simple $B_0$')
-    ax.loglog(ks[4], wt[4]/n2pi/le, color='b', marker='s', mfc='None', ms=16, ls='', alpha=0.9, label=r'SB-1 Case')#
+    ax.loglog(ks[4], wt[4]/n2pi/le, color='b', marker='o', mfc='None', ms=16, ls='', alpha=0.9, label=r'SB-1 Case')#
     #ax.loglog(kshe, wthe/n2pi/lehe, 'k->', lw=3.1, ms=13, alpha=0.8, label=r'stronger $B_0$ S Cases')#r'Simple stronger $B_0$')
     #ax.loglog(ksle, wtle/n2pi/lele, 'c-<', lw=3.1, ms=13, alpha=0.7, label=r'weaker $B_0$ S Cases')#r'Simple weaker $B_0$')
     ax.loglog(kspb, wtpb/n2pi/1.34545/lepb, 'r-*', lw=3.1, ms=13, label=r'C Cases')#r'Complex $B_0$')
     ax.loglog(kspb[6], wtpb[6]/n2pi/1.34545/lepb, color='r', marker='s', mfc='None', ms=16, ls='', label=r'CB-1 Case')#
     ax.loglog(kspb[11], wtpb[11]/n2pi/1.34545/lepb, color='r', marker='d', mfc='None', ms=16, ls='', label=r'CB-2 Case')#
 if ( l_phydim ):
-    plt.xlabel(r'Cylindrical radial linear wavenumer $k_s / (2\pi), (km^{-1})$', fontsize=36)
-    plt.ylabel(r'Wave frequency $\omega / (2\pi), (y^{-1})$', fontsize=36)
+    plt.xlabel(r'Cylindrical radial linear wavenumber $\vert k_s \vert / (2\pi), (km^{-1})$', fontsize=36)
+    plt.ylabel(r'Wave frequency $\vert \omega_o \vert / (2\pi), (y^{-1})$', fontsize=36)
 else:
-    plt.xlabel(r'Cylindrical radial wavenumer $k_s$', fontsize=36)
-    plt.ylabel(r'Normalised Wave frequency $\omega / (2\pi\,\Omega)$', fontsize=36)
+    plt.xlabel(r'Cylindrical radial wavenumber $k_s$', fontsize=36)
+    plt.ylabel(r'Normalised Wave frequency $\omega_o / (2\pi\,\Omega)$', fontsize=36)
+formatter = LogFormatter(labelOnlyBase=False, minor_thresholds=(2, 0.5))
+ax.get_xaxis().set_minor_formatter(formatter)
+##ax.xaxis.set_minor_locator(LogFormatter())
+##ax.xaxis.set_minor_formatter(FormatStrFormatter("%.0e"))
+#yformatter = LogFormatter(labelOnlyBase=False, minor_thresholds=(10, 0.01))
+#ax.get_yaxis().set_minor_formatter(yformatter)
+ax.tick_params(which='both', width=1.5)
+ax.tick_params(which='major', length=12)
+ax.tick_params(which='minor', length=6)
 plt.gca().xaxis.set_tick_params(which='major', labelsize=32)
-plt.gca().xaxis.set_tick_params(which='minor', labelsize=32)
+plt.gca().xaxis.set_tick_params(which='minor', labelsize=26)
 plt.gca().yaxis.set_tick_params(which='major', labelsize=32)
-plt.gca().yaxis.set_tick_params(which='minor', labelsize=32)
+plt.gca().yaxis.set_tick_params(which='minor', labelsize=26)
+xlevels=(2e-3, 6e-3, 1e-2)
+plt.xticks(xlevels)
+ylevels=(1e-2, 2e-2, 6e-2, 1e-1, 2e-1, 6e-1, 1, 2)
+plt.yticks(ylevels)
 if ( l_phydim ):
     plt.xlim(18/d2pi,265/d2pi)
     plt.ylim(100*le/tauA2pi,49000*le/tauA2pi)
 else:
     plt.xlim(18,265)
     plt.ylim(98/n2pi,49000/n2pi)
-plt.grid(ls=':')
+plt.grid(ls=':')#which='both',
 plt.legend(fontsize=26)#32)#
 plt.tight_layout()
 if ( l_save ):
-    plt.savefig(savePlot+'Scaling_Dispersion-Relation_QG-MC-All_phydim.pdf')
+    #plt.savefig(savePlot+'Scaling_Dispersion-Relation_QG-MC-All_phydim_ther.pdf')
+    plt.savefig('/home/ovrbr/Olivier/Post-Doc_2025-2027/'+'Scaling_Dispersion-Relation_QG-MC-All_phydim_ther.pdf')
     plt.close('all')
 else:
     plt.show()
